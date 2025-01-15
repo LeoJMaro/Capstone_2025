@@ -1,2 +1,10 @@
 # Capstone_2025
-Capstone Project
+Description of the Project
+
+## Configure
+
+## License
+
+## Built With
+
+## Collaborators
