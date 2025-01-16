@@ -3,8 +3,11 @@ Description of the Project
 
 ## Configure
 
-## License
-
 ## Built With
 
 ## Collaborators
+Joshua Crocker  
+Gregory Dawe   
+Dylan Mercer   
+Nwokedi Nwatu  
+Joel Oram  
