@@ -1,0 +1,15 @@
+<mat-toolbar class="nav-container">
+  <mat-toolbar-row class="nav-row">
+    <button mat-button routerLink="/">Home</button>
+    <button mat-button routerLink="/about">About</button>
+    <mat-menu #servicesMenu="matMenu">
+      <button mat-menu-item routerLink="/services/service1">Service 1</button>
+      <button mat-menu-item routerLink="/services/service2">Service 2</button>
+      <button mat-menu-item routerLink="/services/service3">Service 3</button>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="servicesMenu">Services</button>
+    <button mat-button routerLink="/portfolio">Portfolio</button>
+    <button mat-button routerLink="/contact">Contact</button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
