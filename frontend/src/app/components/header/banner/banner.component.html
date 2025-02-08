@@ -2,6 +2,8 @@
     <img id="banner-img" src="/images/taylor-insurance-logo-big.png" alt="Logo for Taylor Insurance. Crest with Taylor insurance at the top over an orange sky fading to red as it meets the sun on the horizon. Trees silouheted against the sunrise. Beneath are flowing cartoonish nature waves.">
     
     <div class="settings-container">
+        <button mat-button id="login-btn" routerLink="/login" routerLinkActive="active" ariaCurrentWhenActive="page"> LOGIN </button>
+
         <button id="settings-btn" mat-icon-button [matMenuTriggerFor]="menu">
           <mat-icon id="settings-icon">settings</mat-icon>
         </button>
@@ -10,6 +12,6 @@
           <button mat-menu-item>Profile</button>
           <button mat-menu-item>Sign out</button>
         </mat-menu>
-      </div>
+    </div>
       
 </div>

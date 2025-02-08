@@ -1,15 +1,27 @@
-<mat-toolbar class="nav-container">
+<!-- <mat-toolbar class="nav-container">
   <mat-toolbar-row class="nav-row">
-    <button mat-button routerLink="/">Home</button>
-    <button mat-button routerLink="/about">About</button>
+    <button mat-button routerLink="/"   routerLinkActive="active" ariaCurrentWhenActive="page">>Home</button>
+    <button mat-button routerLink="/about"   routerLinkActive="active" ariaCurrentWhenActive="page">>About</button>
     <mat-menu #servicesMenu="matMenu">
-      <button mat-menu-item routerLink="/services/service1">Service 1</button>
+      <button mat-menu-item routerLink="/services/service1" >Service 1</button>
       <button mat-menu-item routerLink="/services/service2">Service 2</button>
       <button mat-menu-item routerLink="/services/service3">Service 3</button>
     </mat-menu>
     <button mat-button [matMenuTriggerFor]="servicesMenu">Services</button>
-    <button mat-button routerLink="/portfolio">Portfolio</button>
-    <button mat-button routerLink="/contact">Contact</button>
+    <button mat-button routerLink="/contact"   routerLinkActive="active" ariaCurrentWhenActive="page">>Contact</button>
+  </mat-toolbar-row>
+</mat-toolbar> -->
+
+
+
+<mat-toolbar class="nav-container">
+  <mat-toolbar-row class="nav-row">
+    <button mat-button routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page">>Home</button>
+    <button mat-button routerLink="/about" routerLinkActive="active" ariaCurrentWhenActive="page">>About</button>
+    <button mat-button routerLink="/service1" >Service 1</button>
+    <button mat-button routerLink="/service2">Service 2</button>
+    <button mat-button routerLink="/service3">Service 3</button>
+    <button mat-button routerLink="/contact" routerLinkActive="active" ariaCurrentWhenActive="page">>Contact</button>
   </mat-toolbar-row>
 </mat-toolbar>
 
