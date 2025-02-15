@@ -1,0 +1,42 @@
+#banner-container {
+    background-color: rgb(14, 147, 249);
+    display: flex;
+    justify-content: space-between;
+}
+#banner-img {
+    height: 10rem;
+}
+
+.settings-container {
+    background-color: rgba(254, 255, 240, 0);
+    display: flex;
+    justify-content: space-evenly;
+   
+}
+
+#settings-btn {
+    background-color: rgba(240, 248, 255, 0);
+    border: none;
+    height: 32px;
+    margin: 1rem 1rem 1rem 1rem;
+    
+}
+
+#settings-icon {
+    /* padding: 1rem; */
+    font-size: 25px;
+    line-height: 25px;
+}
+#settings-icon:hover {
+    font-size: 28px;
+    line-height: 28px;
+    cursor: pointer;
+}
+#login-btn {
+    background-color: yellow;
+    margin-top: 1rem;
+
+}
+
+
+  

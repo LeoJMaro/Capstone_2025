@@ -1,0 +1,16 @@
+
+
+.nav-container {
+    background-color: #b8d4f0; /* Light grey background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    display: flex;
+}
+  
+.nav-row {
+    justify-content: end;
+}
+
+
+  
+
+  
