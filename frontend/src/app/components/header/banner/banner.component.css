@@ -1,10 +1,10 @@
 #banner-container {
-    background-color: rgb(14, 147, 249);
+    background-color: rgb(0, 31, 62);
     display: flex;
     justify-content: space-between;
 }
 #banner-img {
-    height: 10rem;
+    height: 7rem;
 }
 
 .settings-container {
@@ -15,7 +15,7 @@
 }
 
 #settings-btn {
-    background-color: rgba(240, 248, 255, 0);
+    background-color: rgba(208, 208, 209, 0);
     border: none;
     height: 32px;
     margin: 1rem 1rem 1rem 1rem;
@@ -24,6 +24,7 @@
 
 #settings-icon {
     /* padding: 1rem; */
+    color:aliceblue;
     font-size: 25px;
     line-height: 25px;
 }

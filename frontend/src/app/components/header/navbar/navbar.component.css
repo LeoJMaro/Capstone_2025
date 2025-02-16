@@ -3,12 +3,18 @@
 .nav-container {
     background-color: #b8d4f0; /* Light grey background */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    height: 15px !important;
     display: flex;
-}
+    align-items: center;
+  }
   
 .nav-row {
-    justify-content: end;
+    /* height: 15px !important; */
+    justify-content: center;
+    display: flex;
+    align-items: center;
 }
+
 
 
   
