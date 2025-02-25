@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CustomerService {
@@ -20,12 +21,15 @@ public class CustomerService {
 
     public int getCustomerAge(Customer customer) {
         LocalDate currentDate = LocalDate.now();
-
-        // Convert java.util.Date to java.time.LocalDate
         LocalDate birthDate = customer.getDateOfBirth().toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
 
+        int birthYear = birthDate.getYear();
+        if (birthYear < 1900 || birthYear > currentDate.getYear()) {
+            throw new IllegalArgumentException("Invalid birth year: " + birthYear +
+                    ". Birth year must be between 1900 and " + currentDate.getYear() + ".");
+        }
         return Period.between(birthDate, currentDate).getYears();
     }
 

@@ -16,8 +16,8 @@ public class ConsoleApplication {
         /*
         * TODO: Fix customer age calculation in CustomerService
         * */
-        // Create mock customer
-        Customer mockCustomer = new Customer("John", "Doe", "john.doe@test.com", "123456789", "123 test road", new Date(1990, 11, 21), "Password1");
+        // Create mock customer - Date object uses years since 1990
+        Customer mockCustomer = new Customer("John", "Doe", "john.doe@test.com", "123456789", "123 test road", new Date(90, 11, 21), "Password1");
         customerService.addCustomer(mockCustomer);
 
         // Create mock policies
@@ -100,6 +100,7 @@ public class ConsoleApplication {
                 case 7 -> {
                     System.out.println("Exiting application");
                     scanner.close();
+                    System.exit(0);
                 }
             }
         }
