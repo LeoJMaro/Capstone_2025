@@ -16,9 +16,17 @@ public class ConsoleApplication {
         HomePolicyService homePolicyService = new HomePolicyService();
         CustomerService customerService = new CustomerService();
 
-        // Create mock customer - Date object uses years since 1990
-        Customer mockCustomer = new Customer("John", "Doe", "john.doe@test.com", "123456789", "123 test road", new Date(90, 11, 21), "Password1");
-        customerService.addCustomer(mockCustomer);
+        // Create mock customer
+        Date mockDob = new Date(90, Calendar.DECEMBER, 21); // December 21, 1990
+        customerService.registerCustomer(
+                "John",
+                "Doe",
+                "john.doe@test.com",
+                "123456789",
+                "123 test road",
+                mockDob,
+                "Password1"
+        );
 
         Scanner scanner = new Scanner(System.in);
         boolean loggedIn = false;
