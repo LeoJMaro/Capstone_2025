@@ -1,5 +1,6 @@
 package QuotingApplication;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
@@ -31,20 +32,115 @@ public class ConsoleApplication {
 
         Scanner scanner = new Scanner(System.in);
 
-        while(true) {
-            System.out.println("Enter your email: ");
-            String email = scanner.nextLine();
+        boolean loggedIn = false;
 
-            System.out.println("Enter your password: ");
-            String password = scanner.nextLine();
+        System.out.println("Welcome to the Taylor Insurance Quote System");
 
-            currentCustomer = customerService.getCustomerByEmail(email);
+        while (!loggedIn) {
+            System.out.println("\n1. Sign In");
+            System.out.println("2. Sign Up");
+            System.out.println("3. Exit");
+            System.out.print("Please select an option: ");
 
-            if (currentCustomer != null && customerService.validateEmail(currentCustomer, email) && customerService.validatePassword(currentCustomer, password)) {
-                System.out.println("You have successfully logged in!");
-                break;
-            } else {
-                System.out.println("Invalid email or password, please try again");
+            int authChoice;
+            try {
+                authChoice = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                continue;
+            }
+
+            switch (authChoice) {
+                case 1 -> {
+                    // Sign In
+                    System.out.print("Enter your email: ");
+                    String email = scanner.nextLine();
+
+                    System.out.print("Enter your password: ");
+                    String password = scanner.nextLine();
+
+                    currentCustomer = customerService.getCustomerByEmail(email);
+
+                    if (currentCustomer != null && customerService.validateEmail(currentCustomer, email)
+                            && customerService.validatePassword(currentCustomer, password)) {
+                        System.out.println("You have successfully logged in!");
+                        loggedIn = true;
+                    } else {
+                        System.out.println("Invalid email or password, please try again");
+                    }
+                }
+                case 2 -> {
+                    // Sign Up
+                    System.out.println("\n=== Create New Account ===");
+                    System.out.print("First Name: ");
+                    String firstName = scanner.nextLine();
+
+                    System.out.print("Last Name: ");
+                    String lastName = scanner.nextLine();
+
+                    System.out.print("Email: ");
+                    String email = scanner.nextLine();
+
+                    // Check if email already exists
+                    if (customerService.getCustomerByEmail(email) != null) {
+                        System.out.println("An account with this email already exists.");
+                        continue;
+                    }
+
+                    System.out.print("Phone: ");
+                    String phone = scanner.nextLine();
+
+                    System.out.print("Address: ");
+                    String address = scanner.nextLine();
+
+                    System.out.print("Date of Birth (MM/DD/YYYY): ");
+                    String dobString = scanner.nextLine();
+                    Date dob;
+                    try {
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                        dateFormat.setLenient(false);
+                        dob = dateFormat.parse(dobString);
+
+                        // Validate the age (must be at least 18)
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.add(Calendar.YEAR, -18);
+                        Date minDate = calendar.getTime();
+
+                        if (dob.after(minDate)) {
+                            System.out.println("You must be at least 18 years old to register.");
+                            continue;
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Invalid date format. Please use MM/DD/YYYY.");
+                        continue;
+                    }
+
+                    System.out.print("Create Password: ");
+                    String password = scanner.nextLine();
+
+                    // Basic password validation
+                    if (password.length() < 8) {
+                        System.out.println("Password must be at least 8 characters long.");
+                        continue;
+                    }
+
+//                     Register the new customer
+                    currentCustomer = customerService.registerCustomer(firstName, lastName, email,
+                            phone, address, dob, password);
+
+                    if (currentCustomer != null) {
+                        System.out.println("Account successfully created! You are now logged in.");
+                        loggedIn = true;
+                    } else {
+                        System.out.println("Error creating account. Please try again.");
+                    }
+                }
+                case 3 -> {
+                    System.out.println("Thank you for using the Taylor Insurance Quote System. Goodbye!");
+                    scanner.close();
+                    System.exit(0);
+                }
+                default -> System.out.println("Invalid option. Please try again.");
             }
         }
 
