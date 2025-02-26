@@ -1,8 +1,10 @@
 package QuotingApplication;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleApplication {
@@ -14,24 +16,11 @@ public class ConsoleApplication {
         HomePolicyService homePolicyService = new HomePolicyService();
         CustomerService customerService = new CustomerService();
 
-        /*
-        * TODO: Fix customer age calculation in CustomerService
-        * */
         // Create mock customer - Date object uses years since 1990
         Customer mockCustomer = new Customer("John", "Doe", "john.doe@test.com", "123456789", "123 test road", new Date(90, 11, 21), "Password1");
         customerService.addCustomer(mockCustomer);
 
-        // Create mock policies
-//        AutoPolicy mockAutoPolicy = new AutoPolicy(customerService.getCustomerAge(mockCustomer), 1, 5);
-//        autoPolicyService.calculateAutoPolicy(mockAutoPolicy);
-//        customerService.addPolicy(mockCustomer, mockAutoPolicy);
-//
-//        HomePolicy mockHomePolicy = new HomePolicy(500000, 25, "Electric", "Urban");
-//        homePolicyService.calculateHomePolicy(mockHomePolicy);
-//        customerService.addPolicy(mockCustomer, mockHomePolicy);
-
         Scanner scanner = new Scanner(System.in);
-
         boolean loggedIn = false;
 
         System.out.println("Welcome to the Taylor Insurance Quote System");
@@ -44,7 +33,13 @@ public class ConsoleApplication {
 
             int authChoice;
             try {
-                authChoice = Integer.parseInt(scanner.nextLine());
+                String input = scanner.nextLine();
+                // Temp hidden debug option
+                if (input.equals("99")) {
+                    printAllCustomerDetails(customerService);
+                    continue;
+                }
+                authChoice = Integer.parseInt(input);
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter a number.");
                 continue;
@@ -110,7 +105,7 @@ public class ConsoleApplication {
                             System.out.println("You must be at least 18 years old to register.");
                             continue;
                         }
-                    } catch (Exception e) {
+                    } catch (ParseException e) {
                         System.out.println("Invalid date format. Please use MM/DD/YYYY.");
                         continue;
                     }
@@ -124,7 +119,6 @@ public class ConsoleApplication {
                         continue;
                     }
 
-//                     Register the new customer
                     currentCustomer = customerService.registerCustomer(firstName, lastName, email,
                             phone, address, dob, password);
 
@@ -145,60 +139,192 @@ public class ConsoleApplication {
         }
 
         while(true) {
+            System.out.println("\n=== Insurance Quote System ===");
             System.out.println("1. Display auto policy quotes");
             System.out.println("2. Display home policy quotes");
-            System.out.println("3. Get an auto quote.");
-            System.out.println("4. Get a home quote.");
-            System.out.println("7. Quit");
-            int choice = scanner.nextInt();
+            System.out.println("3. Get an auto quote");
+            System.out.println("4. Get a home quote");
+            System.out.println("5. View profile");
+            System.out.println("6. Log out");
+            System.out.println("7. Exit");
+            System.out.print("Please select an option: ");
+
+            int choice;
+            try {
+                String input = scanner.nextLine();
+                // Hidden debug option
+                if (input.equals("99")) {
+                    printAllCustomerDetails(customerService);
+                    continue;
+                }
+                choice = Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                continue;
+            }
 
             switch (choice) {
                 case 1 -> {
-                    for (int i = 0; i < currentCustomer.getPolicyList().toArray().length; i++) {
+                    // Display auto policy quotes
+                    boolean hasAutoPolicies = false;
+                    System.out.println("\n=== Your Auto Policy Quotes ===");
+
+                    for (int i = 0; i < currentCustomer.getPolicyList().size(); i++) {
                         if (currentCustomer.getPolicyList().get(i) instanceof AutoPolicy) {
-                            System.out.println(((AutoPolicy) currentCustomer.getPolicyList().get(i)).getPremium());
+                            hasAutoPolicies = true;
+                            AutoPolicy policy = (AutoPolicy) currentCustomer.getPolicyList().get(i);
+                            System.out.printf("Policy #%d: Premium $%.2f\n", i+1, policy.getPremium());
                         }
+                    }
+
+                    if (!hasAutoPolicies) {
+                        System.out.println("You have no auto policies. Select option 3 to get a quote.");
                     }
                 }
                 case 2 -> {
-                    for (int i = 0; i < currentCustomer.getPolicyList().toArray().length; i++) {
+                    // Display home policy quotes
+                    boolean hasHomePolicies = false;
+                    System.out.println("\n=== Your Home Policy Quotes ===");
+
+                    for (int i = 0; i < currentCustomer.getPolicyList().size(); i++) {
                         if (currentCustomer.getPolicyList().get(i) instanceof HomePolicy) {
-                            System.out.println(((HomePolicy) currentCustomer.getPolicyList().get(i)).getPremium());
-                        } else {
-                            System.out.println("You have no home policies.");
+                            hasHomePolicies = true;
+                            HomePolicy policy = (HomePolicy) currentCustomer.getPolicyList().get(i);
+                            System.out.printf("Policy #%d: Premium $%.2f\n", i+1, policy.getPremium());
                         }
+                    }
+
+                    if (!hasHomePolicies) {
+                        System.out.println("You have no home policies. Select option 4 to get a quote.");
                     }
                 }
                 case 3 -> {
-                    scanner.nextLine();
-                    System.out.println("Please answer the following questions: ");
-                    System.out.println();
-                    System.out.println("In the last 5 years, how many accidents have you been in?");
-                    String accidentCount = scanner.nextLine();
+                    // Get an auto quote
+                    System.out.println("\n=== Get Auto Insurance Quote ===");
 
-                    System.out.println("How hold is your vehicle?");
-                    String vehicleAge = scanner.nextLine();
+                    int accidentCount;
+                    int vehicleAge;
 
-                    System.out.println("is this accurate? Y/N");
-                    System.out.printf("You have been in %d accidents in the last 5 years, and your vehicle is %d years old.\n", Integer.parseInt(accidentCount), Integer.parseInt(vehicleAge));
+                    try {
+                        System.out.print("In the last 5 years, how many accidents have you been in? ");
+                        accidentCount = Integer.parseInt(scanner.nextLine());
+
+                        if (accidentCount < 0) {
+                            System.out.println("Accident count cannot be negative.");
+                            continue;
+                        }
+
+                        System.out.print("How old is your vehicle (in years)? ");
+                        vehicleAge = Integer.parseInt(scanner.nextLine());
+
+                        if (vehicleAge < 0) {
+                            System.out.println("Vehicle age cannot be negative.");
+                            continue;
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid input. Please enter a number.");
+                        continue;
+                    }
+
+                    System.out.printf("\nConfirm: You have been in %d accident(s) in the last 5 years, and your vehicle is %d year(s) old. Is this accurate? (Y/N) ",
+                            accidentCount, vehicleAge);
                     String accurateInfoQuestion = scanner.nextLine();
 
                     if (accurateInfoQuestion.equalsIgnoreCase("y")) {
-                        AutoPolicy autoPolicy = new AutoPolicy(customerService.getCustomerAge(currentCustomer), Integer.parseInt(accidentCount), Integer.parseInt(vehicleAge));
-                        autoPolicyService.calculateAutoPolicy(autoPolicy);
-                        customerService.addPolicy(currentCustomer, autoPolicy);
-                        System.out.printf("Quote successful, your premium is: %.2f\n", autoPolicy.getPremium());
+                        try {
+                            AutoPolicy autoPolicy = new AutoPolicy(customerService.getCustomerAge(currentCustomer), accidentCount, vehicleAge);
+                            autoPolicyService.calculateAutoPolicy(autoPolicy);
+                            customerService.addPolicy(currentCustomer, autoPolicy);
+                            System.out.printf("Quote successful, your premium is: $%.2f\n", autoPolicy.getPremium());
+                        } catch (Exception e) {
+                            System.out.println("Error calculating quote: " + e.getMessage());
+                        }
+                    } else {
+                        System.out.println("Quote cancelled. Please try again with correct information.");
                     }
                 }
                 case 4 -> {
-                    System.out.println("Not working yet");
+                    System.out.println("Home quote functionality not implemented yet!");
+                }
+                case 5 -> {
+                    System.out.println("\n=== Your Profile ===");
+                    System.out.println("Name: " + currentCustomer.getFirstName() + " " + currentCustomer.getLastName());
+                    System.out.println("Email: " + currentCustomer.getEmail());
+                    System.out.println("Phone: " + currentCustomer.getPhone());
+                    System.out.println("Address: " + currentCustomer.getAddress());
+
+                    try {
+                        int age = customerService.getCustomerAge(currentCustomer);
+                        System.out.println("Age: " + age);
+                    } catch (Exception e) {
+                        System.out.println("Age: Error calculating age");
+                    }
+
+                    System.out.println("Total Policies: " + currentCustomer.getPolicyList().size());
+                }
+                case 6 -> {
+                    System.out.println("Logging out...");
+                    loggedIn = false;
+                    currentCustomer = null;
+                    // Return to login menu
+                    return;
                 }
                 case 7 -> {
-                    System.out.println("Exiting application");
+                    System.out.println("Thank you for using the Insurance Quote System. Goodbye!");
                     scanner.close();
                     System.exit(0);
                 }
+                default -> System.out.println("Invalid option. Please try again.");
             }
+        }
+    }
+    private static void printAllCustomerDetails(CustomerService customerService) {
+        System.out.println("\n=== DEBUG: All Customer Records ===");
+        List<Customer> customers = customerService.getCustomers();
+
+        if (customers.isEmpty()) {
+            System.out.println("No customers in the system.");
+            return;
+        }
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+        for (int i = 0; i < customers.size(); i++) {
+            Customer customer = customers.get(i);
+            System.out.println("\nCustomer #" + (i + 1));
+            System.out.println("Name: " + customer.getFirstName() + " " + customer.getLastName());
+            System.out.println("Email: " + customer.getEmail());
+            System.out.println("Phone: " + customer.getPhone());
+            System.out.println("Address: " + customer.getAddress());
+            System.out.println("Date of Birth: " + dateFormat.format(customer.getDateOfBirth()));
+
+            try {
+                int age = customerService.getCustomerAge(customer);
+                System.out.println("Age: " + age);
+            } catch (Exception e) {
+                System.out.println("Age: Error calculating age - " + e.getMessage());
+            }
+
+            System.out.println("Password Hash: " + customer.getPasswordHash());
+
+            System.out.println("Policies:");
+            if (customer.getPolicyList().isEmpty()) {
+                System.out.println("  None");
+            } else {
+                for (int j = 0; j < customer.getPolicyList().size(); j++) {
+                    Object policy = customer.getPolicyList().get(j);
+                    if (policy instanceof AutoPolicy) {
+                        System.out.printf("  Auto Policy #%d: Premium $%.2f\n",
+                                j+1, ((AutoPolicy) policy).getPremium());
+                    } else if (policy instanceof HomePolicy) {
+                        System.out.printf("  Home Policy #%d: Premium $%.2f\n",
+                                j+1, ((HomePolicy) policy).getPremium());
+                    } else {
+                        System.out.println("  Unknown Policy Type #" + (j+1));
+                    }
+                }
+            }
+            System.out.println("---------------------------------");
         }
     }
 }
