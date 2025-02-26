@@ -1,9 +1,9 @@
 .form-container {
-display: flex;
-justify-content: center;
-}
-
-.form {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .form {
     width: 20rem;
     margin-top: 2rem;
     padding: 1rem;
@@ -14,5 +14,16 @@ justify-content: center;
     display: flex;
     justify-content: flex;
     flex-direction: column;
-
+  }
+  
+  
+mat-form-field {
+    margin: 1rem 0 1rem 0;
 }
+
+  /* mat-error {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: red;
+  } */
+  

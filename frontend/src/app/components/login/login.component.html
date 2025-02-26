@@ -1,36 +1,34 @@
 <div class="form-container">
-    <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <h3 class="form-label">Login</h3>
-      <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email" type="email" required />
-      </mat-form-field>
-  
-      <mat-form-field appearance="fill">
-        <mat-label>Password</mat-label>
-        <input
-          matInput
-          [type]="hidePassword ? 'password' : 'text'"
-          formControlName="password"
-          required
-        />
-        <button
-          mat-icon-button
-          matSuffix
-          (click)="hidePassword = !hidePassword"
-          [attr.aria-label]="hidePassword ? 'Show password' : 'Hide password'"
-          [attr.aria-pressed]="!hidePassword"
-          type="button"
-        >
-          <mat-icon>{{
-            hidePassword ? 'visibility_off' : 'visibility'
-          }}</mat-icon>
-        </button>
-      </mat-form-field>
-  
-      <button mat-raised-button color="primary" type="submit">Submit</button>
-    </form>
-  </div>
-  
-  
-  
+  <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <h3 class="form-label">Login</h3>
+    
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" required />
+      <mat-error *ngIf="!loginForm.value.valid"> {{getEmailErrorMsg()}}</mat-error>
+    </mat-form-field>
+    
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        [type]="hidePassword ? 'password' : 'text'"
+        formControlName="password"
+        required
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="hidePassword = !hidePassword"
+        [attr.aria-label]="hidePassword ? 'Show password' : 'Hide password'"
+        [attr.aria-pressed]="!hidePassword"
+        type="button"
+      >
+        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+      <mat-error *ngIf="!loginForm.value.valid"> {{getPasswordErrorMsg()}} </mat-error>
+    </mat-form-field>
+    
+    <button mat-raised-button color="primary" type="submit">Submit</button>
+  </form>
+</div>
