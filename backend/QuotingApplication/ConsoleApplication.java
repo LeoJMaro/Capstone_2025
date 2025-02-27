@@ -246,9 +246,11 @@ public class ConsoleApplication {
                         if (accurateInfoQuestion.equalsIgnoreCase("y")) {
                             try {
                                 AutoPolicy autoPolicy = new AutoPolicy(customerService.getCustomerAge(currentCustomer), accidentCount, vehicleAge);
-                                autoPolicyService.calculateAutoPolicy(autoPolicy);
+                                autoPolicyService.calculateAutoPolicy(autoPolicy, currentCustomer);
                                 customerService.addPolicy(currentCustomer, autoPolicy);
+                                calculatePolicyDiscount(autoPolicyService, homePolicyService, currentCustomer);
                                 System.out.printf("Quote successful, your premium is: $%.2f\n", autoPolicy.getPremium());
+
                             } catch (Exception e) {
                                 System.out.println("Error calculating quote: " + e.getMessage());
                             }
@@ -257,8 +259,70 @@ public class ConsoleApplication {
                         }
                     }
                     case 4 -> {
-                        System.out.println("Home quote functionality not implemented yet!");
+                        // Get a home quote
+                        System.out.println("\n=== Get Home Insurance Quote ===");
+
+                        double homeValue;
+                        int homeAge;
+                        String homeHeating;
+                        String location;
+
+                        try {
+                            System.out.print("Enter the value of your home: ");
+                            homeValue = Double.parseDouble(scanner.nextLine());
+
+                            if (homeValue <= 0) {
+                                System.out.println("Home value must be greater than zero.");
+                                continue;
+                            }
+
+                            System.out.print("Enter the age of your home: ");
+                            homeAge = Integer.parseInt(scanner.nextLine());
+
+                            if (homeAge < 0) {
+                                System.out.println("Home age cannot be negative.");
+                                continue;
+                            }
+
+                            System.out.print("Enter the type of heating (electric, oil, wood): ");
+                            homeHeating = scanner.nextLine().trim().toLowerCase();
+
+                            if (!homeHeating.equals("electric") && !homeHeating.equals("oil") && !homeHeating.equals("wood")) {
+                                System.out.println("Invalid heating type. Must be electric, oil, or wood.");
+                                continue;
+                            }
+
+                            System.out.print("Enter your location (urban/rural): ");
+                            location = scanner.nextLine().trim().toLowerCase();
+
+                            if (!location.equals("urban") && !location.equals("rural")) {
+                                System.out.println("Invalid location. Must be urban or rural.");
+                                continue;
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid input. Please enter valid numbers.");
+                            continue;
+                        }
+
+                        System.out.printf("\nConfirm: Your home value is $%.2f, it is %d years old, has %s heating, and is in a %s area. Is this correct? (Y/N) ",
+                                homeValue, homeAge, homeHeating, location);
+                        String accurateInfoQuestion = scanner.nextLine();
+
+                        if (accurateInfoQuestion.equalsIgnoreCase("y")) {
+                            try {
+                                HomePolicy homePolicy = new HomePolicy(homeValue, homeAge, homeHeating, location);
+                                homePolicyService.calculateHomePolicy(homePolicy, currentCustomer);
+                                customerService.addPolicy(currentCustomer, homePolicy);
+                                calculatePolicyDiscount(autoPolicyService, homePolicyService, currentCustomer);
+                                System.out.printf("Quote successful, your home insurance premium is: $%.2f\n", homePolicy.getPremium());
+                            } catch (Exception e) {
+                                System.out.println("Error calculating home quote: " + e.getMessage());
+                            }
+                        } else {
+                            System.out.println("Quote cancelled. Please try again with correct information.");
+                        }
                     }
+
                     case 5 -> {
                         System.out.println("\n=== Your Profile ===");
                         System.out.println("Name: " + currentCustomer.getFirstName() + " " + currentCustomer.getLastName());
@@ -341,4 +405,20 @@ public class ConsoleApplication {
             System.out.println("---------------------------------");
         }
     }
+
+    public static void calculatePolicyDiscount(AutoPolicyService autoPolicyService, HomePolicyService homePolicyService, Customer customer) {
+        List<Object> policies = customer.getPolicyList();
+
+        for (Object policy : policies) {
+            if (policy instanceof AutoPolicy) {
+                autoPolicyService.calculateAutoPolicy((AutoPolicy) policy, customer);
+            }
+
+            if (policy instanceof HomePolicy) {
+                homePolicyService.calculateHomePolicy((HomePolicy) policy, customer);
+            }
+        }
+    }
+
+
 }
