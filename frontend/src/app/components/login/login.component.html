@@ -1,11 +1,18 @@
-<div class="form-container">
+<div id="login-card">
+  <div id="login-img-container">
+    <img id="login-img" src="/images/taylor-insurance-logo-big-blue.png" alt="Logo for Taylor Insurance. Crest with Taylor insurance at the top over an orange sky fading to red as it meets the sun on the horizon. Trees silouheted against the sunrise. Beneath are flowing cartoonish nature waves.">
+  </div>
+  
+  <div class="form-container">
     <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <h3 class="form-label">Login</h3>
+      
       <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
         <input matInput formControlName="email" type="email" required />
+        <mat-error *ngIf="!loginForm.value.valid"> {{getEmailErrorMsg()}}</mat-error>
       </mat-form-field>
-  
+      
       <mat-form-field appearance="fill">
         <mat-label>Password</mat-label>
         <input
@@ -22,15 +29,14 @@
           [attr.aria-pressed]="!hidePassword"
           type="button"
         >
-          <mat-icon>{{
-            hidePassword ? 'visibility_off' : 'visibility'
-          }}</mat-icon>
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
+        <mat-error *ngIf="!loginForm.value.valid"> {{getPasswordErrorMsg()}} </mat-error>
       </mat-form-field>
-  
-      <button mat-raised-button color="primary" type="submit">Submit</button>
+      
+      <button mat-raised-button color="primary" type="submit" id="login-btn">login</button>
+      <button mat-raised-button id="sign-up-btn">Sign Up</button>
+      <a routerLink=""><p id="forgot-password" >Forgot Password?</p></a>
     </form>
   </div>
-  
-  
-  
+</div>

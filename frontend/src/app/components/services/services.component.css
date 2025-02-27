@@ -1,0 +1,27 @@
+h2 {
+    padding-left: 1rem;
+}
+
+#services-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.policy-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.policy-img-container {
+    border: 2px rgba(255, 255, 255, 0) solid;
+}
+
+.policy-img-container:hover {
+    cursor: pointer;
+    border: 2px black solid;
+}
+
+#policy-img {
+    height: 20rem;
+    width: 25rem;
+}

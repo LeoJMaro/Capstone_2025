@@ -1,1 +1,28 @@
-<p>services works!</p>
+
+<app-header></app-header>
+
+  <div *ngIf="!isChildRoute()" >
+
+    <h2>Our Services</h2>
+    <div id="services-container">
+ 
+      <div class="policy-container">
+        <div class="policy-img-container" routerLink="home-policy" routerLinkActive="active" aria-current="page">
+          <img id="policy-img" src="/images/home-policy-black-white-large.png" alt="Black and white drawing of a home in a suburban neighbourhood. ">
+        </div>
+        <button mat-button routerLink="home-policy" routerLinkActive="active" aria-current="page">Home Policy</button>
+      </div>
+
+      <div class="policy-container">
+        <div class="policy-img-container" routerLink="auto-policy" routerLinkActive="active" aria-current="page">
+          <img id="policy-img" src="/images/auto-policy-black-white-large.png" alt="Black and white drawing of a station wagon in a suburban neighbourhood. ">
+        </div>
+        <button mat-button  routerLink="auto-policy" routerLinkActive="active" aria-current="page">Auto Policy</button>
+      </div>
+
+    </div>
+    
+
+  </div>
+  
+  <router-outlet></router-outlet>
