@@ -8,7 +8,7 @@ import { HomePolicyComponent } from './components/services/home-policy/home-poli
 import { AutoPolicyComponent } from './components/services/auto-policy/auto-policy.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: LoginComponent },
   { path: 'about', component: AboutComponent },
 
   // { path: 'services', component: ServicesComponent },

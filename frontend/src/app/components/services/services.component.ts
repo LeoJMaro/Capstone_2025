@@ -3,6 +3,7 @@ import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterModule, Rou
 import { HomePolicyComponent } from "./home-policy/home-policy.component";
 import { CommonModule } from '@angular/common';
 import { MatButton } from '@angular/material/button';
+import { HeaderComponent } from "../header/header.component";
 
 @Component({
   selector: 'app-services',
@@ -11,7 +12,8 @@ import { MatButton } from '@angular/material/button';
     RouterLink,
     RouterLinkActive,
     CommonModule,
-    MatButton
+    MatButton,
+    HeaderComponent
 ],
   templateUrl: './services.component.html',
   styleUrl: './services.component.css'
