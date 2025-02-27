@@ -1,5 +1,4 @@
-# Capstone_2025
-
+![Nodamic](./proposal_docs/Nodamic_Big.png)
 ## Project Overview:
 
 The Capstone 2025 project aims to develop a modern, efficient, and scalable insurance platform designed to enhance customer engagement, streamline policy management, and support future growth. This comprehensive system will facilitate various insurance-related functions for customers and administrators, including quoting, purchasing, renewing, and managing policies. The project emphasizes user-friendly design, robust functionality, security, and scalability.
@@ -25,9 +24,6 @@ This repository contains all the documentation and diagrams for the **Capstone 2
 - [Functional Model](#functional-model)
 - [Structural Model](#structural-model)
 - [Behavioral Model](#behavioral-model)
-- [Directory Structure](#directory-structure)
-- [Getting Started](#getting-started)
-- [Additional Information](#additional-information)
 
 ---
 
