@@ -1,19 +1,20 @@
 # Capstone_2025
-Description of the Project
 
-## Configure
+## Project Overview:
+
+The Capstone 2025 project aims to develop a modern, efficient, and scalable insurance platform designed to enhance customer engagement, streamline policy management, and support future growth. This comprehensive system will facilitate various insurance-related functions for customers and administrators, including quoting, purchasing, renewing, and managing policies. The project emphasizes user-friendly design, robust functionality, security, and scalability.
 
 ## Built With
+Angular
+Java
 
 ## Collaborators
 Joshua Crocker  
 Gregory Dawe   
 Dylan Mercer   
 Nwokedi Nwatu  
-Joel Oram  
-# Capstone 2025 Project Proposal Documentation
+Joel Oram 
 
-This repository contains all the documentation and diagrams for the **Capstone 2025** project proposal.
 # Capstone 2025 Project Proposal Documentation
 
 This repository contains all the documentation and diagrams for the **Capstone 2025** project proposal.
@@ -21,7 +22,6 @@ This repository contains all the documentation and diagrams for the **Capstone 2
 ## Table of Contents
 
 - [System Requirements](#system-requirements)
-- [Workplan](#workplan)
 - [Functional Model](#functional-model)
 - [Structural Model](#structural-model)
 - [Behavioral Model](#behavioral-model)
@@ -36,16 +36,6 @@ This repository contains all the documentation and diagrams for the **Capstone 2
 ## System Requirements
 
 For detailed information about the project's functional and non-functional requirements, please refer to the [SystemRequirements.md](./proposal_docs/SystemRequirements.md) document.
-
----
-
-## Workplan
-
-The project timeline and workplan are outlined in the [Workplan.drawio](./proposal_docs/Workplan.drawio) diagram.
-
-![Workplan Diagram](./proposal_docs/Workplan.png)
-
-> **Note:** The image above is generated from the `Workplan.drawio` file.
 
 ---
 
@@ -79,12 +69,3 @@ The behavioral model includes the state diagram for the core object (policy).
 ![Behavioral Model Diagram](./proposal_docs/BehavioralModel.png)
 
 ---
-
-## Diagrams
-
-All diagrams are compiled and explained in the [Diagrams.md](./proposal_docs/Diagrams.md) document.
-
----
-
-## Directory Structure
-
