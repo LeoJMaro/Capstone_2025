@@ -7,19 +7,20 @@ import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { HeaderComponent } from "../../header/header.component";
 
 @Component({
   selector: 'app-auto-policy',
   imports: [
-          ReactiveFormsModule,
-          MatCardModule,
-          MatInputModule,
-          MatSelectModule,
-          RouterModule,
-          MatIcon,
-          CommonModule,
-          MatButton
-  ],
+    ReactiveFormsModule,
+    MatCardModule,
+    MatInputModule,
+    MatSelectModule,
+    RouterModule,
+    MatIcon,
+    CommonModule,
+    MatButton,
+],
   templateUrl: './auto-policy.component.html',
   styleUrl: './auto-policy.component.css'
 })

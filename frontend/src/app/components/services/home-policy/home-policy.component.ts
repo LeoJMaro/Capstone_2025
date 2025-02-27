@@ -10,6 +10,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { MatButton } from '@angular/material/button';
+import { HeaderComponent } from '../../header/header.component';
 
 @Component({
   selector: 'app-home-policy',
@@ -21,7 +22,7 @@ import { MatButton } from '@angular/material/button';
       RouterModule,
       MatIcon,
       CommonModule,
-      MatButton
+      MatButton,
   ],
   templateUrl: './home-policy.component.html',
   styleUrl: './home-policy.component.css'
