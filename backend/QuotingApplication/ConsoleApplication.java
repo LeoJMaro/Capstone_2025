@@ -12,13 +12,13 @@ public class ConsoleApplication {
         Customer currentCustomer = null;
 
         // Services
-        AutoPolicyService autoPolicyService = new AutoPolicyService();
-        HomePolicyService homePolicyService = new HomePolicyService();
-        CustomerService customerService = new CustomerService();
+        AutoPolicyFactory autoPolicyFactory = new AutoPolicyFactory();
+        HomePolicyFactory homePolicyFactory = new HomePolicyFactory();
+        CustomerFactory customerFactory = new CustomerFactory();
 
         // Create mock customer
         Date mockDob = new Date(90, Calendar.DECEMBER, 21); // December 21, 1990
-        customerService.registerCustomer(
+        customerFactory.registerCustomer(
                 "John",
                 "Doe",
                 "john.doe@test.com",
@@ -48,7 +48,7 @@ public class ConsoleApplication {
                     String input = scanner.nextLine();
                     // Temp hidden debug option
                     if (input.equals("99")) {
-                        printAllCustomerDetails(customerService);
+                        printAllCustomerDetails(customerFactory);
                         continue;
                     }
                     authChoice = Integer.parseInt(input);
@@ -66,10 +66,10 @@ public class ConsoleApplication {
                         System.out.print("Enter your password: ");
                         String password = scanner.nextLine();
 
-                        currentCustomer = customerService.getCustomerByEmail(email);
+                        currentCustomer = customerFactory.getCustomerByEmail(email);
 
-                        if (currentCustomer != null && customerService.validateEmail(currentCustomer, email)
-                                && customerService.validatePassword(currentCustomer, password)) {
+                        if (currentCustomer != null && customerFactory.validateEmail(currentCustomer, email)
+                                && customerFactory.validatePassword(currentCustomer, password)) {
                             System.out.println("You have successfully logged in!");
                             loggedIn = true;
                         } else {
@@ -89,7 +89,7 @@ public class ConsoleApplication {
                         String email = scanner.nextLine();
 
                         // Check if email already exists
-                        if (customerService.getCustomerByEmail(email) != null) {
+                        if (customerFactory.getCustomerByEmail(email) != null) {
                             System.out.println("An account with this email already exists.");
                             continue;
                         }
@@ -131,7 +131,7 @@ public class ConsoleApplication {
                             continue;
                         }
 
-                        currentCustomer = customerService.registerCustomer(firstName, lastName, email,
+                        currentCustomer = customerFactory.registerCustomer(firstName, lastName, email,
                                 phone, address, dob, password);
 
                         if (currentCustomer != null) {
@@ -167,7 +167,7 @@ public class ConsoleApplication {
                     String input = scanner.nextLine();
                     // Hidden debug option
                     if (input.equals("99")) {
-                        printAllCustomerDetails(customerService);
+                        printAllCustomerDetails(customerFactory);
                         continue;
                     }
                     choice = Integer.parseInt(input);
@@ -245,10 +245,10 @@ public class ConsoleApplication {
 
                         if (accurateInfoQuestion.equalsIgnoreCase("y")) {
                             try {
-                                AutoPolicy autoPolicy = new AutoPolicy(customerService.getCustomerAge(currentCustomer), accidentCount, vehicleAge);
-                                autoPolicyService.calculateAutoPolicy(autoPolicy, currentCustomer);
-                                customerService.addPolicy(currentCustomer, autoPolicy);
-                                calculatePolicyDiscount(autoPolicyService, homePolicyService, currentCustomer);
+                                AutoPolicy autoPolicy = new AutoPolicy(customerFactory.getCustomerAge(currentCustomer), accidentCount, vehicleAge);
+                                autoPolicyFactory.calculateAutoPolicy(autoPolicy, currentCustomer);
+                                customerFactory.addPolicy(currentCustomer, autoPolicy);
+                                calculatePolicyDiscount(autoPolicyFactory, homePolicyFactory, currentCustomer);
                                 System.out.printf("Quote successful, your premium is: $%.2f\n", autoPolicy.getPremium());
 
                             } catch (Exception e) {
@@ -311,9 +311,9 @@ public class ConsoleApplication {
                         if (accurateInfoQuestion.equalsIgnoreCase("y")) {
                             try {
                                 HomePolicy homePolicy = new HomePolicy(homeValue, homeAge, homeHeating, location);
-                                homePolicyService.calculateHomePolicy(homePolicy, currentCustomer);
-                                customerService.addPolicy(currentCustomer, homePolicy);
-                                calculatePolicyDiscount(autoPolicyService, homePolicyService, currentCustomer);
+                                homePolicyFactory.calculateHomePolicy(homePolicy, currentCustomer);
+                                customerFactory.addPolicy(currentCustomer, homePolicy);
+                                calculatePolicyDiscount(autoPolicyFactory, homePolicyFactory, currentCustomer);
                                 System.out.printf("Quote successful, your home insurance premium is: $%.2f\n", homePolicy.getPremium());
                             } catch (Exception e) {
                                 System.out.println("Error calculating home quote: " + e.getMessage());
@@ -331,7 +331,7 @@ public class ConsoleApplication {
                         System.out.println("Address: " + currentCustomer.getAddress());
 
                         try {
-                            int age = customerService.getCustomerAge(currentCustomer);
+                            int age = customerFactory.getCustomerAge(currentCustomer);
                             System.out.println("Age: " + age);
                         } catch (Exception e) {
                             System.out.println("Age: Error calculating age");
@@ -356,9 +356,9 @@ public class ConsoleApplication {
         }
     }
 
-    private static void printAllCustomerDetails(CustomerService customerService) {
+    private static void printAllCustomerDetails(CustomerFactory customerFactory) {
         System.out.println("\n=== DEBUG: All Customer Records ===");
-        List<Customer> customers = customerService.getCustomers();
+        List<Customer> customers = customerFactory.getCustomers();
 
         if (customers.isEmpty()) {
             System.out.println("No customers in the system.");
@@ -377,7 +377,7 @@ public class ConsoleApplication {
             System.out.println("Date of Birth: " + dateFormat.format(customer.getDateOfBirth()));
 
             try {
-                int age = customerService.getCustomerAge(customer);
+                int age = customerFactory.getCustomerAge(customer);
                 System.out.println("Age: " + age);
             } catch (Exception e) {
                 System.out.println("Age: Error calculating age - " + e.getMessage());
@@ -406,16 +406,16 @@ public class ConsoleApplication {
         }
     }
 
-    public static void calculatePolicyDiscount(AutoPolicyService autoPolicyService, HomePolicyService homePolicyService, Customer customer) {
+    public static void calculatePolicyDiscount(AutoPolicyFactory autoPolicyFactory, HomePolicyFactory homePolicyFactory, Customer customer) {
         List<Object> policies = customer.getPolicyList();
 
         for (Object policy : policies) {
             if (policy instanceof AutoPolicy) {
-                autoPolicyService.calculateAutoPolicy((AutoPolicy) policy, customer);
+                autoPolicyFactory.calculateAutoPolicy((AutoPolicy) policy, customer);
             }
 
             if (policy instanceof HomePolicy) {
-                homePolicyService.calculateHomePolicy((HomePolicy) policy, customer);
+                homePolicyFactory.calculateHomePolicy((HomePolicy) policy, customer);
             }
         }
     }

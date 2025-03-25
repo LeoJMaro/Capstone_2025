@@ -17,7 +17,7 @@ import java.util.List;
  * Provides functionality for customer registration, password management (hashing and verification),
  * retrieving customer information, managing policies, and age calculation.
  */
-public class CustomerService {
+public class CustomerFactory {
 
     /**
      * List of registered customers.
