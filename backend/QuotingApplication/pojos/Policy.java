@@ -1,20 +1,18 @@
-package QuotingApplication;
+package QuotingApplication.pojos;
 
 import java.util.Date;
 
 public class Policy {
     private int policyId;
     private int customerId;
-    enum policyType {AutoPolicy, HomePolicy};
+    private String policyType;
     private Date startDate;
     private Date endDate;
     private double basePremium;
     private double premium;
-    enum status {Active, Inactive};
-    private policyType policyType;
-    private status status;
+    private String status;
 
-    public Policy(int policyId, int customerId, Date startDate, Date endDate, double basePremium, double premium, Policy.policyType policyType, Policy.status status) {
+    public Policy(int policyId, int customerId, Date startDate, Date endDate, double basePremium, double premium, String policyType, String status) {
         this.policyId = policyId;
         this.customerId = customerId;
         this.startDate = startDate;
@@ -73,19 +71,19 @@ public class Policy {
         this.premium = premium;
     }
 
-    public policyType getPolicyType() {
+    public String getPolicyType() {
         return policyType;
     }
 
-    public void setPolicyType(policyType policyType) {
+    public void setPolicyType(String policyType) {
         this.policyType = policyType;
     }
 
-    public status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }

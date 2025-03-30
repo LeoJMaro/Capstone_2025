@@ -1,4 +1,4 @@
-package QuotingApplication;
+package QuotingApplication.pojos;
 
 
 import java.util.Date;
@@ -10,7 +10,7 @@ public class HomePolicy extends Policy {
     private double locationFactor = 0;
     private double heatingFactor = 0;
 
-    public HomePolicy(int policyId, int customerId, Date startDate, Date endDate, double basePremium, double premium, Policy.policyType policyType, Policy.status status, Dwelling dwelling) {
+    public HomePolicy(int policyId, int customerId, Date startDate, Date endDate, double basePremium, double premium, String policyType, String status, Dwelling dwelling) {
         super(policyId, customerId, startDate, endDate, basePremium, premium, policyType, status);
         this.dwelling = dwelling;
     }

@@ -1,4 +1,6 @@
-package QuotingApplication;
+package QuotingApplication.pojos;
+
+import java.time.LocalDate;
 
 public class Users extends Customer{
     private int userId;
@@ -6,7 +8,7 @@ public class Users extends Customer{
     private String passwordHash;
     private String role;
 
-    public Users(int customerId, String firstName, String lastName, String email, String phone, String address, String dateOfBirth, String createdAt, int userId, String username, String passwordHash, String role) {
+    public Users(int customerId, String firstName, String lastName, String email, String phone, String address, LocalDate dateOfBirth, String createdAt, int userId, String username, String passwordHash, String role) {
         super(customerId, firstName, lastName, email, phone, address, dateOfBirth, createdAt);
 
         this.userId = userId;

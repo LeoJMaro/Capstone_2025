@@ -1,17 +1,17 @@
-package QuotingApplication;
+package QuotingApplication.pojos;
 
 public class Dwelling {
     private String dwellingType;
     private String heatingType;
     private String location;
-    private int ageBuilt;
+    private int age;
     private double homeValue;
 
-    public Dwelling(String dwellingType, String heatingType, String location, int ageBuilt, double homeValue) {
+    public Dwelling(String dwellingType, String heatingType, String location, int age, double homeValue) {
         this.dwellingType = dwellingType;
         this.heatingType = heatingType;
         this.location = location;
-        this.ageBuilt = ageBuilt;
+        this.age = age;
         this.homeValue = homeValue;
     }
 
@@ -39,12 +39,12 @@ public class Dwelling {
         this.location = location;
     }
 
-    public int getAgeBuilt() {
-        return ageBuilt;
+    public int getAge() {
+        return age;
     }
 
-    public void setAgeBuilt(int ageBuilt) {
-        this.ageBuilt = ageBuilt;
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public double getHomeValue() {

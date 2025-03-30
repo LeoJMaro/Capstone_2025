@@ -1,4 +1,6 @@
-package QuotingApplication;
+package QuotingApplication.pojos;
+
+import java.time.LocalDate;
 
 public class Customer {
     private int customerId;
@@ -7,10 +9,10 @@ public class Customer {
     private String email;
     private String phone;
     private String address;
-    private String dateOfBirth;
+    private LocalDate dateOfBirth;
     private String createdAt;
 
-    public Customer(int customerId, String firstName, String lastName, String email, String phone, String address, String dateOfBirth, String createdAt) {
+    public Customer(int customerId, String firstName, String lastName, String email, String phone, String address, LocalDate dateOfBirth, String createdAt) {
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -69,11 +71,11 @@ public class Customer {
         this.address = address;
     }
 
-    public String getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
