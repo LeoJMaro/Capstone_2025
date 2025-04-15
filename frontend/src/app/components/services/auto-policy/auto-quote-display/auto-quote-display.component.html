@@ -1,0 +1,36 @@
+ <mat-card class="quote-container">
+    <mat-card-header>
+      <mat-card-title>Auto Insurance Quote</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item>
+          <strong>Vehicle:</strong> {{ vehicleMake }} {{ vehicleModel }} ({{ vehicleYear }})
+        </mat-list-item>
+        <mat-list-item>
+          <strong>Accident History:</strong> {{ vehicleAccidents }} reported
+        </mat-list-item>
+      </mat-list>
+  
+      <mat-divider></mat-divider>
+  
+      <h3>Quote Breakdown</h3>
+      <mat-list>
+        <mat-list-item>Base Premium: ${{ basePremium }}</mat-list-item>
+        <mat-list-item>Accident Surcharge: ${{ accidentFee }}</mat-list-item>
+        <mat-list-item>Discounts Applied: ${{ discountAmount }}</mat-list-item>
+        <mat-list-item><strong>Total Quote:</strong> ${{ quoteAmount }}</mat-list-item>
+      </mat-list>
+  
+      <mat-divider></mat-divider>
+  
+      <div class="quote-actions">
+        <button mat-raised-button color="primary">Accept Quote</button>
+        <button mat-raised-button color="accent">Modify Details</button>
+        <button mat-raised-button color="warn">Contact Support</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  
+
+
