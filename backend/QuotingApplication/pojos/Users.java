@@ -1,36 +1,45 @@
 package QuotingApplication.pojos;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
 
 @Entity
-public class Users extends Customer {
+//@Table(name = "users")
+public class Users {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
+
+    @OneToOne
+    @JoinColumn(name = "customerId", nullable = false)
+    private Customer customer;
+
     private String username;
     private String passwordHash;
     private String role;
 
     public Users() {
-        super();
     }
 
-    public Users(int customerId, String firstName, String lastName, String email, String phone, String address,
-                 LocalDate dateOfBirth, String createdAt, int userId, String username,
-                 String passwordHash, String role) {
-        super(customerId, firstName, lastName, email, phone, address, dateOfBirth, createdAt);
-        this.userId = userId;
+    public Users(Customer customer, String username, String passwordHash, String role) {
+        this.customer = customer;
         this.username = username;
         this.passwordHash = passwordHash;
         this.role = role;
     }
 
-    // Getters and setters
+
     public int getUserId() {
         return userId;
     }
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+    public Customer getCustomer() {
+        return customer;
+    }
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
     public String getUsername() {
         return username;
