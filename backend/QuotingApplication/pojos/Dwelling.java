@@ -1,9 +1,14 @@
 package QuotingApplication.pojos;
 
-import jakarta.persistence.Embeddable; // CHANGED: Use embeddable annotation since it's part of a larger entity
+import jakarta.persistence.*;
 
-@Embeddable
+@Entity
+//@Table(name = "dwellings")
 public class Dwelling {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int dwellingId;
 
     private String dwellingType;
     private String heatingType;
@@ -12,7 +17,6 @@ public class Dwelling {
     private double homeValue;
 
     public Dwelling() {
-
     }
 
     public Dwelling(String dwellingType, String heatingType, String location, int age, double homeValue) {
@@ -23,6 +27,12 @@ public class Dwelling {
         this.homeValue = homeValue;
     }
 
+    public int getDwellingId() {
+        return dwellingId;
+    }
+    public void setDwellingId(int dwellingId) {
+        this.dwellingId = dwellingId;
+    }
     public String getDwellingType() {
         return dwellingType;
     }
