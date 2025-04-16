@@ -15,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { AutoQuoteDisplayComponent } from './auto-quote-display/auto-quote-display.component';
 import { AutoPolicyService } from '../../../shared/services/auto-policy.service';
+import { Observable} from 'rxjs/internal/Observable';
 
 
 @Component({
@@ -31,7 +32,7 @@ import { AutoPolicyService } from '../../../shared/services/auto-policy.service'
     CommonModule,
     MatButtonModule,
     MatFormFieldModule,
-    
+
 ],
   templateUrl: './auto-policy.component.html',
   styleUrl: './auto-policy.component.css'
@@ -42,8 +43,8 @@ export class AutoPolicyComponent {
     quoteData!: object;
 
     constructor(
-      private router: Router, 
-      private route: ActivatedRoute, 
+      private router: Router,
+      private route: ActivatedRoute,
       private dialog: MatDialog,
       private autoPolicyService: AutoPolicyService
     ) {}
@@ -56,20 +57,36 @@ export class AutoPolicyComponent {
           vehicleAccidents: new FormControl('', [Validators.required])
         });
       }
-  
+
     isChildRoute(): boolean {
       return this.router.url.includes('/services');
     }
 
+
     onSubmit() {
-      this.autoData = this.autoForm.value
-      this.quoteData = this.autoPolicyService.postAutoQuote(this.autoData)
-      console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-      console.log("Auto Data returned from api")
-      console.log(this.quoteData)
-      console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-      this.openQuoteDialog(this.autoData, this.quoteData);
+      this.autoData = this.autoForm.value;
+
+      // Using an observer object for subscription
+      this.autoPolicyService.postAutoQuote(this.autoData).subscribe({
+        next: (response) => {
+          // Handle the response data
+          this.quoteData = response;
+
+          // Open the quote dialog with the response data
+          this.openQuoteDialog(this.autoData, this.quoteData);
+        },
+        error: (err) => {
+          // Handle errors if any
+          console.error('Error fetching quote this:', err);
+        },
+        complete: () => {
+          console.log('Quote fetching completed.');
+        }
+      });
     }
+
+
+
 
     openQuoteDialog(autoData: AutoPolicy, quoteData: any): void {
       this.dialog.open(AutoQuoteDisplayComponent, {

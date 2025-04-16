@@ -1,53 +1,49 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IAutoPolicy } from '../interfaces/iauto-policy';
-import { Observable } from 'rxjs/internal/Observable';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+
+export interface AutoPolicy {
+
+  customerId: number;
+  startDate: string;
+  endDate: string;
+  basePremium: number;
+  status: string;
+  vehicle: {
+    vehicleMake: string;
+    vehicleModel: string;
+    vehicleYear: number;
+    vehicleAccidents: number;
+  };
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AutoPolicyService {
-
+  private apiUrl = 'http://localhost:8080/v1/autopolicies';
 
   constructor(private http: HttpClient) {}
 
-  getAutoQuote(): Observable<IAutoPolicy[]> {
-    return this.http.get<IAutoPolicy[]>('URL GOES HERE');
-  }
-
-  // postAutoQuote(): Observable<any> {
-  //   this.http.post<any>('URL GOES HERE');
-  // }
-
-  postAutoQuote(data: any): Observable<object> {
+  postAutoQuote(autoData: any): Observable<AutoPolicy> {
 
     let body = {
       "customerId": 1,
-      "startDate": "2025-04-16",
-      "endDate": "2026-04-16",
-      "basePremium": 750,
-      "premium": 0.0,
-      "status": "PENDING",
+      "startDate": "2025-05-01T00:00:00",
+      "endDate": "2026-05-01T00:00:00",
+      "basePremium": 100.0,
+      "status": "ACTIVE",
       "vehicle": {
-        "vehicleMake": data.vehicleMake,
-        "vehicleModel": data.vehicleModel,
-        "vehicleYear": data.vehicleYear,
-        "vehicleAccidents": data.vehicleYear
-      }
-    }
-
-    return this.http.post<IAutoPolicy>('http//:localhost:8080/v1/autopolicies', {data}); 
+        "vehicleMake": autoData.vehicleMake,
+        "vehicleModel": autoData.vehicleModel,
+        "vehicleYear": autoData.vehicleYear,
+        "vehicleAccidents": autoData.vehicleAccidents
+      }}
+    return this.http.post<AutoPolicy>(this.apiUrl, body);
   }
-
-  // postMockQuote(data: any): any {
-
-  //   return {
-  //     basePremium: 40,
-  //     accidentFee: 30,
-  //     discountAmount: 50,
-  //     quoteAmount: 400
-      
-  //   }
-  // }
-  
 }
+
+
+
+
