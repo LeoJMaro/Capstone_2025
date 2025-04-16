@@ -46,7 +46,7 @@
 
     <build>
         <!-- Specify your nonstandard source directory -->
-        <sourceDirectory>QuotingApplication</sourceDirectory>
+        
 
         <!-- Override default resources directory -->
         <resources>
