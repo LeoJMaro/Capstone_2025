@@ -4,13 +4,12 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-//@Table(name = "customers")
+@Table(name = "customers")
 public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int customerId;
-
+    private int Id;
     private String firstName;
     private String lastName;
     private String email;
@@ -22,9 +21,9 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(int customerId, String firstName, String lastName, String email, String phone,
+    public Customer(int Id, String firstName, String lastName, String email, String phone,
                     String address, LocalDate dateOfBirth, String createdAt) {
-        this.customerId = customerId;
+        this.Id = Id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -35,12 +34,12 @@ public class Customer {
     }
 
 
-    public int getCustomerId() {
-        return customerId;
+    public int getId() {
+        return Id;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setId(int customerId) {
+        this.Id = customerId;
     }
 
     public String getFirstName() {

@@ -8,11 +8,11 @@ import java.util.Date;
 public class Quote {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int quoteId;
 
     @ManyToOne
-    @JoinColumn(name = "customerId", nullable = false)
+//    @JoinColumn(name = "customerId", nullable = false)
     private Customer customer;
 
     private String policyType;
