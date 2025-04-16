@@ -2,6 +2,8 @@ package QuotingApplication.pojos;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -9,7 +11,7 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
+    private Integer Id;
     private String firstName;
     private String lastName;
     private String email;
@@ -18,10 +20,11 @@ public class Customer {
     private LocalDate dateOfBirth;
     private String createdAt;
 
+
     public Customer() {
     }
 
-    public Customer(int Id, String firstName, String lastName, String email, String phone,
+    public Customer(Integer Id, String firstName, String lastName, String email, String phone,
                     String address, LocalDate dateOfBirth, String createdAt) {
         this.Id = Id;
         this.firstName = firstName;
@@ -34,11 +37,11 @@ public class Customer {
     }
 
 
-    public int getId() {
+    public Integer getId() {
         return Id;
     }
 
-    public void setId(int customerId) {
+    public void setId(Integer customerId) {
         this.Id = customerId;
     }
 
