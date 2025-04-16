@@ -62,7 +62,6 @@ export class AutoPolicyComponent {
       return this.router.url.includes('/services');
     }
 
-
     onSubmit() {
       this.autoData = this.autoForm.value;
 
@@ -77,16 +76,10 @@ export class AutoPolicyComponent {
         },
         error: (err) => {
           // Handle errors if any
-          console.error('Error fetching quote this:', err);
-        },
-        complete: () => {
-          console.log('Quote fetching completed.');
+          console.error('Error fetching quote:', err);
         }
       });
     }
-
-
-
 
     openQuoteDialog(autoData: AutoPolicy, quoteData: any): void {
       this.dialog.open(AutoQuoteDisplayComponent, {
