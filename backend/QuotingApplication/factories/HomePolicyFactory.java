@@ -1,9 +1,11 @@
 package QuotingApplication.factories;
 
 import QuotingApplication.pojos.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class HomePolicyFactory implements PolicyFactory{
 
     public static Policy createPolicy(int policyId, int customerId, java.util.Date startDate, java.util.Date endDate, double basePremium, double premium, String policyType, String status, Dwelling dwelling) {

@@ -1,12 +1,14 @@
 package QuotingApplication.factories;
 
+import QuotingApplication.factories.PolicyFactory;
+import org.springframework.stereotype.Component;
 import QuotingApplication.pojos.*;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
-
-public class AutoPolicyFactory implements PolicyFactory {
+@Component
+public class AutoPolicyFactory implements QuotingApplication.factories.PolicyFactory {
 
     public static Policy createPolicy(int policyId, int customerId, java.util.Date startDate, java.util.Date endDate, double basePremium, double premium, String policyType, String status) {
         return new AutoPolicy(policyId, customerId, startDate, endDate, basePremium, premium, policyType, status);

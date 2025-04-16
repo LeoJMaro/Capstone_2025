@@ -30,8 +30,8 @@ public class ConsoleApplication {
         AutoPolicyFactory autoPolicyFactory = new AutoPolicyFactory();
         HomePolicyFactory homePolicyFactory = new HomePolicyFactory();
 
-        AutoPolicy autoPolicy = (AutoPolicy) AutoPolicyFactory.createPolicy(1, customer.getCustomerId(), startDate, endDate, 750, 0, "AutoPolicy", "Active");
-        HomePolicy homePolicy = (HomePolicy) HomePolicyFactory.createPolicy(2, customer.getCustomerId(), startDate, endDate, 500, 0, "HomePolicy", "Active", dwelling);
+        AutoPolicy autoPolicy = (AutoPolicy) AutoPolicyFactory.createPolicy(1, customer.getId(), startDate, endDate, 750, 0, "AutoPolicy", "Active");
+        HomePolicy homePolicy = (HomePolicy) HomePolicyFactory.createPolicy(2, customer.getId(), startDate, endDate, 500, 0, "HomePolicy", "Active", dwelling);
 
         autoPolicyFactory.calculateAutoPolicy(autoPolicy, 7, vehicle, customers);
         homePolicyFactory.calculateHomePolicy(homePolicy, customer, homePolicy.getDwelling());

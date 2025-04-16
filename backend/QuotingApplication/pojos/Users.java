@@ -3,17 +3,19 @@ package QuotingApplication.pojos;
 import jakarta.persistence.*;
 
 @Entity
-//@Table(name = "users")
+@Table(name = "users")
 public class Users {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
+    // No auto-generation needed if you are using @MapsId (if that's your strategy)
+    private int id;
 
     @OneToOne
-    @JoinColumn(name = "customerId", nullable = false)
+    @JoinColumn(name = "customer_id", nullable = false)
+    @MapsId
     private Customer customer;
 
+    private String email;  // <-- New field added
     private String username;
     private String passwordHash;
     private String role;
@@ -21,25 +23,32 @@ public class Users {
     public Users() {
     }
 
-    public Users(Customer customer, String username, String passwordHash, String role) {
+    public Users(Customer customer, String email, String username, String passwordHash, String role) {
         this.customer = customer;
+        this.email = email;
         this.username = username;
         this.passwordHash = passwordHash;
         this.role = role;
     }
 
-
-    public int getUserId() {
-        return userId;
+    // Getters and setters
+    public int getId() {
+        return id;
     }
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setId(int id) {
+        this.id = id;
     }
     public Customer getCustomer() {
         return customer;
     }
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
     public String getUsername() {
         return username;
