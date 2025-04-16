@@ -1,11 +1,17 @@
-package QuotingApplication.factories;
+package factories;
 
-import QuotingApplication.pojos.*;
+import org.springframework.stereotype.Component;
+import pojos.Policy;
+import pojos.Customer;
+import pojos.HomePolicy;
+import pojos.AutoPolicy;
+import pojos.Vehicle;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 
+@Component
 public class AutoPolicyFactory implements PolicyFactory {
 
     public static Policy createPolicy(int policyId, int customerId, java.util.Date startDate, java.util.Date endDate, double basePremium, double premium, String policyType, String status) {

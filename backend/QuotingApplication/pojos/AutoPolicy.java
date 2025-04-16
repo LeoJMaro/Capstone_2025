@@ -1,7 +1,9 @@
-package QuotingApplication.pojos;
+package pojos;
 
 import jakarta.persistence.*; // CHANGED: Use Jakarta Persistence annotations
 import java.util.Date;
+import pojos.Policy;
+
 
 @Entity
 public class AutoPolicy extends Policy {
@@ -37,4 +39,6 @@ public class AutoPolicy extends Policy {
     public void setVehicleFactor(double vehicleFactor) {
         this.vehicleFactor = vehicleFactor;
     }
+
+
 }

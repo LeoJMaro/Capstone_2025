@@ -1,8 +1,12 @@
-package QuotingApplication;
 
-import QuotingApplication.factories.AutoPolicyFactory;
-import QuotingApplication.factories.HomePolicyFactory;
-import QuotingApplication.pojos.*;
+import factories.AutoPolicyFactory;
+import factories.HomePolicyFactory;
+import pojos.Customer;
+import pojos.Dwelling;
+import pojos.HomePolicy;
+import pojos.Vehicle;  //
+import pojos.AutoPolicy; //
+
 
 import java.time.LocalDate;
 import java.util.ArrayList;

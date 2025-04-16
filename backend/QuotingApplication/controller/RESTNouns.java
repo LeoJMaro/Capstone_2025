@@ -1,4 +1,4 @@
-package QuotingApplication.controller;
+package controller;
 
 /**
  * Store the API Path and REST Nouns as constants

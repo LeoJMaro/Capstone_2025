@@ -1,4 +1,4 @@
-package QuotingApplication.pojos;
+package pojos;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;

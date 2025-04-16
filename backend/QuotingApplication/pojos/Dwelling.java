@@ -1,4 +1,4 @@
-package QuotingApplication.pojos;
+package pojos;
 
 import jakarta.persistence.Embeddable; // CHANGED: Use embeddable annotation since it's part of a larger entity
 

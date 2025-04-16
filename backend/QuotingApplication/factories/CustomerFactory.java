@@ -1,6 +1,11 @@
-package QuotingApplication.factories;
+package factories;
 
-import QuotingApplication.pojos.Customer;
+
+import org.springframework.stereotype.Component;
+import pojos.Customer;
+
+import java.util.Date;
+import java.util.List;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -19,6 +24,7 @@ import java.util.List;
  * Provides functionality for customer registration, password management (hashing and verification),
  * retrieving customer information, managing policies, and age calculation.
  */
+@Component
 public class CustomerFactory {
 
     /**

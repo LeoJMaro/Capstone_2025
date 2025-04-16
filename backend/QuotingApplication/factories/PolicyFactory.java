@@ -1,10 +1,12 @@
-package QuotingApplication.factories;
+package factories;
 
-import QuotingApplication.pojos.Customer;
-import QuotingApplication.pojos.Policy;
+import org.springframework.stereotype.Component;
+import pojos.Customer;
+import pojos.Policy;
 import java.util.Date;
 import java.util.List;
 
+@Component
 public interface PolicyFactory {
 
     default Customer getCustomerById(List<Customer> customers, int customerId) {
