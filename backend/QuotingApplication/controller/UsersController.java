@@ -5,11 +5,9 @@ import QuotingApplication.dataaccess.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -18,6 +16,9 @@ public class UsersController {
 
     @Autowired
     private UsersRepository usersRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     // Get all users
     @GetMapping
@@ -42,12 +43,12 @@ public class UsersController {
         }
 
         // Check if email already exists
-//        if (usersRepository.existsByEmail(user.getEmail())) {
-//            return new ResponseEntity<>(HttpStatus.CONFLICT);
-//        }
+        if (usersRepository.existsByEmail(user.getEmail())) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
 
-        // In a real application, you would hash the password here
-        // user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
+        // Hash the password before saving
+        user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
 
         Users savedUser = usersRepository.save(user);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
@@ -55,36 +56,49 @@ public class UsersController {
 
     // Update user
     @PutMapping(RESTNouns.ID)
-    public ResponseEntity<Users> updateUser(@PathVariable int id, @RequestBody Users user) {
+    public ResponseEntity<Users> updateUser(@PathVariable(name = "id") int id, @RequestBody Users user) {
         Optional<Users> existingUser = usersRepository.findById(id);
         if (existingUser.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-//        // Check if username already exists for a different user
-//        Optional<Users> userByUsername = usersRepository.findByUsername(user.getUsername());
-//        if (userByUsername.isPresent() && userByUsername.get().getCustomerId() != id) {
-//            return new ResponseEntity<>(HttpStatus.CONFLICT);
-//        }
-//
-//        // Check if email already exists for a different user
-//        Optional<Users> userByEmail = usersRepository.findByEmail(user.getEmail());
-//        if (userByEmail.isPresent() && userByEmail.get().getCustomerId() != id) {
-//            return new ResponseEntity<>(HttpStatus.CONFLICT);
-//        }
-//
-//        // Preserve customer ID
-//        int customerId = existingUser.get().getCustomerId();
-//        user.setCustomerId(customerId);
-//        user.setUserId(id);
+        // Check if username already exists for a different user
+        Optional<Users> userByUsername = usersRepository.findByUsername(user.getUsername());
+        if (userByUsername.isPresent() && userByUsername.get().getId() != id) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
 
-        // In a real application, you would check if the password needs to be updated
-        // if (!user.getPasswordHash().equals(existingUser.get().getPasswordHash())) {
-        //     user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
-        // }
+        // Check if email already exists for a different user
+        Optional<Users> userByEmail = usersRepository.findByEmail(user.getEmail());
+        if (userByEmail.isPresent() && userByEmail.get().getId() != id) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
+        // Only hash the password if it has changed
+        if (!user.getPasswordHash().equals(existingUser.get().getPasswordHash())) {
+            user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
+        }
+
+        // Preserve the customer relationship
+        user.setCustomer(existingUser.get().getCustomer());
+        user.setId(id);  // Make sure to set the ID
 
         Users updatedUser = usersRepository.save(user);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    }
+
+    // Endpoint for password validation
+    @PostMapping("/validate-password")
+    public ResponseEntity<Boolean> validatePassword(@RequestBody Map<String, String> credentials) {
+        String username = credentials.get("username");
+        String password = credentials.get("passwordHash");
+
+        Optional<Users> user = usersRepository.findByUsername(username);
+        if (user.isPresent()) {
+            boolean valid = passwordEncoder.matches(password, user.get().getPasswordHash());
+            return new ResponseEntity<>(valid, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(false, HttpStatus.OK);
     }
 
     // Delete user
@@ -118,4 +132,3 @@ public class UsersController {
         return new ResponseEntity<>(exists, HttpStatus.OK);
     }
 }
-
