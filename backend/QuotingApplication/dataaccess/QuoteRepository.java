@@ -9,8 +9,6 @@ import java.util.List;
 
 @Repository
 public interface QuoteRepository extends CrudRepository<Quote, Integer> {
-    // Find quotes by policy type
-    List<Quote> findByPolicyType(String policyType);
 
     // Find quotes generated after a specific date
     List<Quote> findByGeneratedDateAfter(Date date);

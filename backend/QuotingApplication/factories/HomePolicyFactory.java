@@ -8,8 +8,8 @@ import java.util.List;
 @Component
 public class HomePolicyFactory implements PolicyFactory{
 
-    public static Policy createPolicy(int policyId, int customerId, java.util.Date startDate, java.util.Date endDate, double basePremium, double premium, String policyType, String status, Dwelling dwelling) {
-        return new HomePolicy(policyId, customerId, startDate, endDate, basePremium, premium, policyType, status, dwelling);
+    public static Policy createPolicy(Integer policyId, int customerId, java.util.Date startDate, java.util.Date endDate, double basePremium, double premium, String status, Dwelling dwelling) {
+        return new HomePolicy(policyId, customerId, startDate, endDate, basePremium, premium, status, dwelling);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class HomePolicyFactory implements PolicyFactory{
         }
 
         // Set location factor if the home is in a rural area
-        if ("rural".equalsIgnoreCase(dwelling.getHeatingType())) {
+        if ("rural".equalsIgnoreCase(dwelling.getLocation())) {
             locationFactor = 1.15;  // Slightly higher risk for rural locations.
         }
 

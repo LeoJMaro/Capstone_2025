@@ -69,16 +69,6 @@ public class PolicyController {
         return new ResponseEntity<>(policies, HttpStatus.OK);
     }
 
-    // Get policies by type
-    @GetMapping("/type/{policyType}")
-    public ResponseEntity<List<Policy>> getPoliciesByType(@PathVariable String policyType) {
-        List<Policy> policies = policyRepository.findByPolicyType(policyType);
-        if (policies.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(policies, HttpStatus.OK);
-    }
-
     // Get policies by status
     @GetMapping("/status/{status}")
     public ResponseEntity<List<Policy>> getPoliciesByStatus(@PathVariable String status) {
