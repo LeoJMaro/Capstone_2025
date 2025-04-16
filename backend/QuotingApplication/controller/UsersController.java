@@ -91,7 +91,7 @@ public class UsersController {
     @PostMapping("/validate-password")
     public ResponseEntity<Boolean> validatePassword(@RequestBody Map<String, String> credentials) {
         String username = credentials.get("username");
-        String password = credentials.get("passwordHash"); // or "password" depending on what you want to send
+        String password = credentials.get("passwordHash");
 
         Optional<Users> user = usersRepository.findByUsername(username);
         if (user.isPresent()) {
@@ -101,7 +101,6 @@ public class UsersController {
         return new ResponseEntity<>(false, HttpStatus.OK);
     }
 
-    // Rest of your controller methods...
     // Delete user
     @DeleteMapping(RESTNouns.ID)
     public ResponseEntity<Void> deleteUser(@PathVariable int id) {
