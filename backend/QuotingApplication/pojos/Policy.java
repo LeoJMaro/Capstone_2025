@@ -4,11 +4,13 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "policy_type")
 public class Policy {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int policyId;
+    private Integer policyId;
 
     private int customerId;
 
@@ -20,21 +22,19 @@ public class Policy {
 
     private double basePremium;
     private double premium;
-    private String policyType;
     private String status;
 
     public Policy() {
     }
 
-    public Policy(int policyId, int customerId, Date startDate, Date endDate,
-                  double basePremium, double premium, String policyType, String status) {
+    public Policy(Integer policyId, int customerId, Date startDate, Date endDate,
+                  double basePremium, double premium, String status) {
         this.policyId = policyId;
         this.customerId = customerId;
         this.startDate = startDate;
         this.endDate = endDate;
         this.basePremium = basePremium;
         this.premium = premium;
-        this.policyType = policyType;
         this.status = status;
     }
 
@@ -73,12 +73,6 @@ public class Policy {
     }
     public void setPremium(double premium) {
         this.premium = premium;
-    }
-    public String getPolicyType() {
-        return policyType;
-    }
-    public void setPolicyType(String policyType) {
-        this.policyType = policyType;
     }
     public String getStatus() {
         return status;

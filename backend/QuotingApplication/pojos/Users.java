@@ -1,36 +1,54 @@
 package QuotingApplication.pojos;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
 
 @Entity
-public class Users extends Customer {
+@Table(name = "users")
+public class Users {
 
-    private int userId;
+    @Id
+    // No auto-generation needed if you are using @MapsId (if that's your strategy)
+    private int id;
+
+    @OneToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    @MapsId
+    private Customer customer;
+
+    private String email;  // <-- New field added
     private String username;
     private String passwordHash;
     private String role;
 
     public Users() {
-        super();
     }
 
-    public Users(int customerId, String firstName, String lastName, String email, String phone, String address,
-                 LocalDate dateOfBirth, String createdAt, int userId, String username,
-                 String passwordHash, String role) {
-        super(customerId, firstName, lastName, email, phone, address, dateOfBirth, createdAt);
-        this.userId = userId;
+    public Users(Customer customer, String email, String username, String passwordHash, String role) {
+        this.customer = customer;
+        this.email = email;
         this.username = username;
         this.passwordHash = passwordHash;
         this.role = role;
     }
 
     // Getters and setters
-    public int getUserId() {
-        return userId;
+    public int getId() {
+        return id;
     }
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setId(int id) {
+        this.id = id;
+    }
+    public Customer getCustomer() {
+        return customer;
+    }
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
     public String getUsername() {
         return username;

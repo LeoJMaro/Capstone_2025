@@ -4,24 +4,29 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-public class Quote extends Customer {
+@Table(name = "quotes")
+public class Quote {
 
+    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int quoteId;
+
+    @ManyToOne
+//    @JoinColumn(name = "customerId", nullable = false)
+    private Customer customer;
+
     private String policyType;
     private double premium;
 
     @Temporal(TemporalType.DATE)
     private Date generatedDate;
 
+
     public Quote() {
-        super();
     }
 
-    public Quote(int customerId, String firstName, String lastName, String email, String phone, String address,
-                 java.time.LocalDate dateOfBirth, String createdAt, int quoteId, String policyType,
-                 double premium, Date generatedDate) {
-        super(customerId, firstName, lastName, email, phone, address, dateOfBirth, createdAt);
-        this.quoteId = quoteId;
+    public Quote(Customer customer, String policyType, double premium, Date generatedDate) {
+        this.customer = customer;
         this.policyType = policyType;
         this.premium = premium;
         this.generatedDate = generatedDate;
@@ -32,6 +37,12 @@ public class Quote extends Customer {
     }
     public void setQuoteId(int quoteId) {
         this.quoteId = quoteId;
+    }
+    public Customer getCustomer() {
+        return customer;
+    }
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
     public String getPolicyType() {
         return policyType;
