@@ -62,7 +62,12 @@ export class AutoPolicyComponent {
     }
 
     onSubmit() {
+      this.autoData = this.autoForm.value
       this.quoteData = this.autoPolicyService.postAutoQuote(this.autoData)
+      console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+      console.log("Auto Data returned from api")
+      console.log(this.quoteData)
+      console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
       this.openQuoteDialog(this.autoData, this.quoteData);
     }
 
