@@ -11,7 +11,7 @@ export class HomePolicyService {
   constructor(private http: HttpClient) {}
 
   getHomeQuote(): Observable<IHomePolicy[]> {
-    return this.http.get<IHomePolicy[]>('URL GOES HERE');
+    return this.http.get<IHomePolicy[]>('http://localhost:8080/api1/homepolicies');
   }
 
 
