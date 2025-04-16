@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @RestController
@@ -22,19 +23,17 @@ public class CustomerController {
 
     // Get all customers
     @GetMapping
-    public Iterable<Customer> getAllCustomers() {
-        return customerRepository.findAll();
+    public ResponseEntity<Iterable<Customer>> getAllCustomers() {
+        try {
+            Iterable<Customer> customers = customerRepository.findAll();
+            return new ResponseEntity<>(customers, HttpStatus.OK);
+        } catch (Exception e) {
+            System.err.println("Error retrieving all customers: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Get customer by ID
-    /**
-    @GetMapping(RESTNouns.ID)
-    public ResponseEntity<Customer> getCustomerById(@PathVariable int id) {
-        Optional<Customer> customer = customerRepository.findById(id);
-        return customer.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-    **/
     @GetMapping(RESTNouns.ID)
     public ResponseEntity<Customer> getCustomerById(@PathVariable int id) {
         try {
@@ -42,61 +41,85 @@ public class CustomerController {
             return customer.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                     .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
         } catch (Exception e) {
-            // Log the exception
-            System.err.println("Error retrieving customer: " + e.getMessage());
-            e.printStackTrace();
+            System.err.println("Error retrieving customer by ID: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    // Create new customer
+    // Create new customer (accepting JSON instead of form params)
     @PostMapping
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
-        Customer savedCustomer = customerRepository.save(customer);
-        return new ResponseEntity<>(savedCustomer, HttpStatus.CREATED);
+        try {
+            customer.setId(null); // Ensure it's treated as a new entity
+            Customer savedCustomer = customerRepository.save(customer);
+            return new ResponseEntity<>(savedCustomer, HttpStatus.CREATED);
+        } catch (Exception e) {
+            System.err.println("Error creating customer: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     // Update customer
     @PutMapping(RESTNouns.ID)
     public ResponseEntity<Customer> updateCustomer(@PathVariable int id, @RequestBody Customer customer) {
-        if (!customerRepository.existsById(id)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try {
+            if (!customerRepository.existsById(id)) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            customer.setId(id);
+            Customer updatedCustomer = customerRepository.save(customer);
+            return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
+        } catch (Exception e) {
+            System.err.println("Error updating customer: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        customer.setId(id);
-        Customer updatedCustomer = customerRepository.save(customer);
-        return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
     }
 
     // Delete customer
     @DeleteMapping(RESTNouns.ID)
     public ResponseEntity<Void> deleteCustomer(@PathVariable int id) {
-        if (!customerRepository.existsById(id)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try {
+            if (!customerRepository.existsById(id)) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            customerRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            System.err.println("Error deleting customer: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        customerRepository.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     // Get customer age
     @GetMapping(RESTNouns.ID + "/age")
     public ResponseEntity<Integer> getCustomerAge(@PathVariable int id) {
-        Optional<Customer> customerOpt = customerRepository.findById(id);
-        if (customerOpt.isPresent()) {
-            Customer customer = customerOpt.get();
-            int age = customerFactory.getCustomerAge(customer);
-            return new ResponseEntity<>(age, HttpStatus.OK);
+        try {
+            Optional<Customer> customerOpt = customerRepository.findById(id);
+            if (customerOpt.isPresent()) {
+                int age = customerFactory.getCustomerAge(customerOpt.get());
+                return new ResponseEntity<>(age, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            System.err.println("Error calculating customer age: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     // Find customer by email
     @GetMapping("/email/{email}")
     public ResponseEntity<Customer> getCustomerByEmail(@PathVariable String email) {
-        Customer customer = customerRepository.findByEmail(email);
-        if (customer != null) {
-            return new ResponseEntity<>(customer, HttpStatus.OK);
+        try {
+            Customer customer = customerRepository.findByEmail(email);
+            if (customer != null) {
+                return new ResponseEntity<>(customer, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            System.err.println("Error retrieving customer by email: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
-

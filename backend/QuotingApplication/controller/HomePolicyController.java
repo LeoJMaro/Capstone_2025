@@ -44,9 +44,30 @@ public class HomePolicyController {
     // Create new home policy
     @PostMapping
     public ResponseEntity<HomePolicy> createHomePolicy(@RequestBody HomePolicy policy) {
+        // Save the policy first
         HomePolicy savedPolicy = homePolicyRepository.save(policy);
-        return new ResponseEntity<>(savedPolicy, HttpStatus.CREATED);
+
+        // Assuming you have customer and dwelling information from the request
+        // You might need to fetch these objects from your database or request body if they are not part of the HomePolicy object.
+        Optional<Customer> customerOpt = customerRepository.findById(policy.getCustomerId());
+        if (customerOpt.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Customer not found
+        }
+        Customer customer = customerOpt.get();
+
+        // You can assume the dwelling information is part of the HomePolicy object.
+        Dwelling dwelling = policy.getDwelling();
+
+        // Now call the calculation method using the homePolicyFactory
+        homePolicyFactory.calculateHomePolicy(policy, customer, dwelling);
+
+        // Save the policy again after calculation if needed
+        HomePolicy updatedPolicy = homePolicyRepository.save(policy);
+
+        // Return the updated policy with the calculated premium
+        return new ResponseEntity<>(updatedPolicy, HttpStatus.CREATED);
     }
+
 
     // Update home policy
     @PutMapping(RESTNouns.ID)
@@ -94,6 +115,7 @@ public class HomePolicyController {
         HomePolicy policy = policyOpt.get();
         Customer customer = customerOpt.get();
 
+        // Use the factory to calculate premium
         homePolicyFactory.calculateHomePolicy(policy, customer, request.getDwelling());
 
         HomePolicy savedPolicy = homePolicyRepository.save(policy);
@@ -131,4 +153,3 @@ public class HomePolicyController {
         }
     }
 }
-

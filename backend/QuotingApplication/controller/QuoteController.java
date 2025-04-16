@@ -67,16 +67,6 @@ public class QuoteController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    // Get quotes by policy type
-    @GetMapping("/type/{policyType}")
-    public ResponseEntity<List<Quote>> getQuotesByPolicyType(@PathVariable String policyType) {
-        List<Quote> quotes = quoteRepository.findByPolicyType(policyType);
-        if (quotes.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(quotes, HttpStatus.OK);
-    }
-
     // Get quotes generated after a specific date
     @GetMapping("/after")
     public ResponseEntity<List<Quote>> getQuotesAfterDate(

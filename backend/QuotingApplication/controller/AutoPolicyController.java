@@ -1,6 +1,5 @@
 package QuotingApplication.controller;
 
-
 import QuotingApplication.factories.AutoPolicyFactory;
 import QuotingApplication.pojos.AutoPolicy;
 import QuotingApplication.pojos.Customer;
@@ -46,6 +45,14 @@ public class AutoPolicyController {
     // Create new auto policy
     @PostMapping
     public ResponseEntity<AutoPolicy> createAutoPolicy(@RequestBody AutoPolicy policy) {
+        Optional<Customer> customerOpt = customerRepository.findById(policy.getCustomerId());
+        if (customerOpt.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        // Calculate and set premium
+        autoPolicyFactory.calculateAutoPolicy(policy, policy.getCustomerId(), policy.getVehicle(), List.of(customerOpt.get()));
+
         AutoPolicy savedPolicy = autoPolicyRepository.save(policy);
         return new ResponseEntity<>(savedPolicy, HttpStatus.CREATED);
     }
@@ -83,9 +90,7 @@ public class AutoPolicyController {
 
     // Calculate premium for an auto policy
     @PostMapping("/calculate")
-    public ResponseEntity<AutoPolicy> calculateAutoPolicy(
-            @RequestBody AutoPolicyCalculationRequest request) {
-
+    public ResponseEntity<AutoPolicy> calculateAutoPolicy(@RequestBody AutoPolicyCalculationRequest request) {
         Optional<AutoPolicy> policyOpt = autoPolicyRepository.findById(request.getPolicyId());
         Optional<Customer> customerOpt = customerRepository.findById(request.getCustomerId());
 
@@ -97,6 +102,7 @@ public class AutoPolicyController {
         List<Customer> customers = new ArrayList<>();
         customers.add(customerOpt.get());
 
+        // Use factory method to calculate premium
         autoPolicyFactory.calculateAutoPolicy(policy, request.getCustomerId(), request.getVehicle(), customers);
 
         AutoPolicy savedPolicy = autoPolicyRepository.save(policy);
@@ -134,4 +140,3 @@ public class AutoPolicyController {
         }
     }
 }
-
