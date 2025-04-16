@@ -7,24 +7,37 @@
 
 <mat-card class="auto-policy-card">
     <mat-card-header>
-      <mat-card-title>Auto Policy Quote</mat-card-title>
+      <mat-card-title class="title">Auto Policy Quote</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <form>
+      <form class="form" [formGroup]="autoForm" (ngSubmit)="onSubmit()">
+
         <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Driver Age</mat-label>
-          <input matInput placeholder="Enter driver age" type="number">
+          <mat-label>Vehicle Make</mat-label>
+          <input matInput placeholder="Enter Vehicle Make" formControlName="vehicleMake">
         </mat-form-field>
+
         <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Accident Count</mat-label>
-          <input matInput placeholder="Enter accident count" type="number">
+          <mat-label>Vehicle Model</mat-label>
+          <input matInput placeholder="Enter Vehicle Model" formControlName="vehicleModel">
         </mat-form-field>
+
         <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Vehicle Age</mat-label>
-          <input matInput placeholder="Enter vehicle age" type="number">
+          <mat-label>Vehicle Year</mat-label>
+          <input matInput placeholder="Enter Vehicle Year" type="number" formControlName="vehicleYear">
         </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Vehicle Accidents</mat-label>
+          <input matInput placeholder="Enter Number of Accidents" type="number" formControlName="vehicleAccidents">
+        </mat-form-field>
+
         <button mat-raised-button color="primary" class="calculate-button">Get Quote</button>
       </form>
     </mat-card-content>
   </mat-card>
+
+ 
+  
+  
   

@@ -3,12 +3,12 @@ package pojos;
 import jakarta.persistence.*;
 import java.util.Date;
 
-
 @Entity
+//@Table(name = "home_policies")
 public class HomePolicy extends Policy {
 
-
-    @Embedded
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "dwelling_id", referencedColumnName = "dwellingId")
     private Dwelling dwelling;
 
     private double additional = 0;
@@ -16,9 +16,7 @@ public class HomePolicy extends Policy {
     private double locationFactor = 0;
     private double heatingFactor = 0;
 
-    /**
-     * CHANGED: Added no-arg constructor required by JPA.
-     */
+
     public HomePolicy() {
         super();
     }
@@ -29,7 +27,6 @@ public class HomePolicy extends Policy {
         this.dwelling = dwelling;
     }
 
-    // Getters and setters
     public Dwelling getDwelling() {
         return dwelling;
     }

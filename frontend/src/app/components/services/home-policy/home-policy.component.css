@@ -1,42 +1,46 @@
 
-.back-btn-container {
+   .title {
+    margin-bottom: 2rem;
+  }
+   .back-btn-container {
     display: flex;
     flex-direction: row;
     justify-content: left;
     height: 3rem;
-}
-.back-btn {
+  }
+  .back-btn {
     display: flex;
     flex-direction: row;
     justify-content: left;
     align-items: center;
-}
-.home-policy-card {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 40px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-radius: 8px;
   }
   
-  .home-policy-card mat-card-header {
-    text-align: center;
-  }
-  
-  .home-policy-card form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .full-width {
-    width: 100%;
-  }
-  
-  .calculate-button {
-    align-self: center;
-    padding: 10px 20px;
-    font-size: 16px;
-  }
-  
+  .auto-policy-card {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 40px;
+      background-color: #f9f9f9;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+    
+    .auto-policy-card mat-card-header {
+      text-align: center;
+    }
+    
+    .auto-policy-card form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .full-width {
+      width: 100%;
+    }
+    
+    .calculate-button {
+      align-self: center;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    

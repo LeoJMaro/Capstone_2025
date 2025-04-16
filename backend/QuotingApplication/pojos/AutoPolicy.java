@@ -1,16 +1,21 @@
 package pojos;
 
-import jakarta.persistence.*; // CHANGED: Use Jakarta Persistence annotations
+import jakarta.persistence.*;
 import java.util.Date;
 import pojos.Policy;
 
 
 @Entity
+//@Table(name = "auto_policies")
 public class AutoPolicy extends Policy {
 
     private double ageFactor;
     private double accidentFactor;
     private double vehicleFactor;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "vehicle_id", referencedColumnName = "vehicleId")
+    private Vehicle vehicle;
 
 
     public AutoPolicy() {
@@ -40,5 +45,11 @@ public class AutoPolicy extends Policy {
         this.vehicleFactor = vehicleFactor;
     }
 
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
 
 }
