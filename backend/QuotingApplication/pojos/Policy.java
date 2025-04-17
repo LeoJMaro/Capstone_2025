@@ -20,7 +20,9 @@ public class Policy {
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
+    @Column
     private double basePremium;
+    @Column
     private double premium;
     private String status;
 

@@ -95,7 +95,7 @@ public class HomePolicyController {
 
     // Get home policies by customer ID
     @GetMapping(RESTNouns.CUSTOMER + "/{customerId}")
-    public ResponseEntity<List<HomePolicy>> getHomePoliciesByCustomerId(@PathVariable int customerId) {
+    public ResponseEntity<List<HomePolicy>> getHomePoliciesByCustomerId(@PathVariable(name = "customerId") int customerId) {
         List<HomePolicy> policies = homePolicyRepository.findByCustomerId(customerId);
         if (policies.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

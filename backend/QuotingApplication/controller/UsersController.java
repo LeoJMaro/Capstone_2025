@@ -1,5 +1,6 @@
 package QuotingApplication.controller;
 
+import QuotingApplication.dataaccess.CustomerRepository;
 import QuotingApplication.pojos.Users;
 import QuotingApplication.dataaccess.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class UsersController {
 
     @Autowired
     private UsersRepository usersRepository;
+
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;

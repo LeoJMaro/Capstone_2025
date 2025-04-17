@@ -7,12 +7,12 @@ import jakarta.persistence.*;
 public class Users {
 
     @Id
-    // No auto-generation needed if you are using @MapsId (if that's your strategy)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
     @OneToOne
     @JoinColumn(name = "customer_id")
-    @MapsId
     private Customer customer;
 
     private String email;
