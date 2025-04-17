@@ -6,36 +6,36 @@
 
       <mat-list>
         <mat-list-item>
-          <strong>Home:</strong> {{ homeType }} {{ heatingType }} {{ age }} {{location}}
+          <strong>Home:</strong> {{ dwellingType }} {{ heatingType }} {{ age }} {{location}}
         </mat-list-item>
         <mat-list-item>
           <strong>Home Value:</strong> {{ homeValue }} reported
         </mat-list-item>
       </mat-list>
-  
+
       <mat-divider></mat-divider>
-  
+
       <h3>Quote Breakdown</h3>
       <mat-list>
         <mat-list-item>Base Premium: ${{ basePremium }}</mat-list-item>
-        <mat-list-item>Age Surcharge: ${{ ageFee }}</mat-list-item>
-        <mat-list-item>Heating Surcharge: ${{ heatingFee }}</mat-list-item>
-        <mat-list-item>Location Surcharge: ${{ locationFee }}</mat-list-item>
-        <mat-list-item>Additional: ${{ additional }}</mat-list-item>
-        <mat-list-item>Discounts Applied: ${{ discountAmount }}</mat-list-item>
-        <mat-list-item><strong>Total Quote:</strong> ${{ quoteAmount }}</mat-list-item>
+<!--        <mat-list-item>Age Surcharge: ${{ ageFee }}</mat-list-item>-->
+<!--        <mat-list-item>Heating Surcharge: ${{ heatingFee }}</mat-list-item>-->
+<!--        <mat-list-item>Location Surcharge: ${{ locationFee }}</mat-list-item>-->
+<!--        <mat-list-item>Additional: ${{ additional }}</mat-list-item>-->
+<!--        <mat-list-item>Discounts Applied: ${{ discountAmount }}</mat-list-item>-->
+        <mat-list-item><strong>Your Premium:</strong> ${{ premium }}</mat-list-item>
       </mat-list>
-  
+
       <mat-divider></mat-divider>
-  
+
       <div class="quote-actions">
-        <button mat-raised-button color="primary">Accept Quote</button>
+        <button mat-raised-button color="primary"(click)="closeDialog()">Accept Quote</button>
         <button mat-raised-button color="accent">Modify Details</button>
         <button mat-raised-button color="warn">Contact Support</button>
       </div>
     </mat-card-content>
   </mat-card>
-  
+
 
 
 

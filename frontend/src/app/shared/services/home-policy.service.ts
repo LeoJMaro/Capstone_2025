@@ -1,36 +1,113 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/internal/Observable';
-import { IHomePolicy } from '../interfaces/ihome-policy';
+import { HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import { Observable } from 'rxjs';
+import {IHomePolicy} from '../interfaces/ihome-policy';
+export interface AutoPolicy {
+
+  customerId: number;
+  startDate: Date;
+  endDate: Date;
+  basePremium: number;
+  premium: number;
+  status: string;
+  dwelling: {
+    dwellingType: string;
+    heatingType: string;
+    location: string;
+    age: number;
+    homeValue: number;
+  }
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class HomePolicyService {
+  private apiUrl = 'http://localhost:8080/v1/homepolicies';
 
   constructor(private http: HttpClient) {}
 
-  getHomeQuote(): Observable<IHomePolicy[]> {
-    return this.http.get<IHomePolicy[]>('URL GOES HERE');
+  getHomePolicies() {
+    return this.http.get(this.apiUrl)
   }
 
-
-  postHomeQuote(data: object): Observable<object> {
-    return this.http.post<IHomePolicy>('URL GOES HERE', {data}); 
-  }
-
-  // postMockQuote(data: any): any {
-
-  //   return {
-  //       basePremium: 40000,
-  //       ageFee: 30,
-  //       heatingFee: 44,
-  //       locationFee: 589,
-  //       additional: 23,
-  //       discountAmount: 50,
-  //       quoteAmount: 900
-      
-  //   }
+  // getHomePolicyById(id: number) {
+  //   const params = new HttpParams().set('id', id.toString());
+  //   return this.http.get(this.apiUrl, { params });
   // }
-  
+
+  getHomePolicyById(id: number) {
+    return this.http.get<any>(`${this.apiUrl}/customers/${id}`);
+  }
+
+  postHomeQuote(homeData: any): Observable<IHomePolicy> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    // Dynamically calculate dates
+    const currentDate = new Date();
+    const nextYearDate = new Date();
+    nextYearDate.setFullYear(currentDate.getFullYear() + 1);
+
+    const formatDate = (date: Date): string => {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    };
+
+    let body = {
+      "customerId": 1,
+      "startDate": formatDate(currentDate),
+      "endDate": formatDate(nextYearDate),
+      "basePremium": 500,
+      "premium": 0.0,
+      "status": "ACTIVE",
+      "dwelling": {
+        "dwellingType": homeData.dwellingType,
+        "heatingType": homeData.heatingType,
+        "location": homeData.location,
+        "age": homeData.age,
+        "homeValue": homeData.homeValue
+      }
+    };
+    return this.http.post<any>(this.apiUrl, body, { headers });
+  }
+
+  renewHomePolicy(policyId: any, homeData: any) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    // Dynamically calculate dates
+    const currentDate = new Date();
+    const nextYearDate = new Date();
+    nextYearDate.setFullYear(currentDate.getFullYear() + 1);
+
+    const formatDate = (date: Date): string => {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    };
+
+    let body = {
+      "customerId": 1,
+      "startDate": formatDate(currentDate),
+      "endDate": formatDate(nextYearDate),
+      "basePremium": 500,
+      "premium": 0.0,
+      "status": "ACTIVE",
+      "dwelling": {
+        "dwellingType": homeData.dwellingType,
+        "heatingType": homeData.heatingType,
+        "location": homeData.location,
+        "age": homeData.age,
+        "homeValue": homeData.homeValue
+      }
+    };
+    return this.http.put<any>(this.apiUrl, body, { headers });
+  }
+
 }
