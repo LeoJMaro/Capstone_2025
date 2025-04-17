@@ -30,7 +30,7 @@ public class QuoteController {
 
     // Get quote by ID
     @GetMapping(RESTNouns.ID)
-    public ResponseEntity<Quote> getQuoteById(@PathVariable int id) {
+    public ResponseEntity<Quote> getQuoteById(@PathVariable(name = "id") int id) {
         Optional<Quote> quote = quoteRepository.findById(id);
         return quote.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -45,7 +45,7 @@ public class QuoteController {
 
     // Update quote
     @PutMapping(RESTNouns.ID)
-    public ResponseEntity<Quote> updateQuote(@PathVariable int id, @RequestBody Quote quote) {
+    public ResponseEntity<Quote> updateQuote(@PathVariable(name = "id") int id, @RequestBody Quote quote) {
         Optional<Quote> existingQuote = quoteRepository.findById(id);
         if (existingQuote.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -62,7 +62,7 @@ public class QuoteController {
 
     // Delete quote
     @DeleteMapping(RESTNouns.ID)
-    public ResponseEntity<Void> deleteQuote(@PathVariable int id) {
+    public ResponseEntity<Void> deleteQuote(@PathVariable(name = "id") int id) {
         if (!quoteRepository.existsById(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -83,7 +83,7 @@ public class QuoteController {
 
     // Get quotes for a specific customer
     @GetMapping(RESTNouns.CUSTOMER + "/{customerId}")
-    public ResponseEntity<List<Quote>> getQuotesByCustomerId(@PathVariable int customerId) {
+    public ResponseEntity<List<Quote>> getQuotesByCustomerId(@PathVariable(name = "customerId") int customerId) {
         List<Quote> quotes = quoteRepository.findByCustomerId(customerId);
         if (quotes.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

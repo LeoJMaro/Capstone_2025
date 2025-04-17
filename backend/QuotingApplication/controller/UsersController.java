@@ -28,7 +28,7 @@ public class UsersController {
 
     // Get user by ID
     @GetMapping(RESTNouns.ID)
-    public ResponseEntity<Users> getUserById(@PathVariable int id) {
+    public ResponseEntity<Users> getUserById(@PathVariable(name = "id") int id) {
         Optional<Users> user = usersRepository.findById(id);
         return user.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -103,7 +103,7 @@ public class UsersController {
 
     // Delete user
     @DeleteMapping(RESTNouns.ID)
-    public ResponseEntity<Void> deleteUser(@PathVariable int id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable(name = "id") int id) {
         if (!usersRepository.existsById(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -113,21 +113,21 @@ public class UsersController {
 
     // Get users by role
     @GetMapping("/role/{role}")
-    public ResponseEntity<Iterable<Users>> getUsersByRole(@PathVariable String role) {
+    public ResponseEntity<Iterable<Users>> getUsersByRole(@PathVariable(name = "role") String role) {
         Iterable<Users> users = usersRepository.findByRole(role);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     // Check if username exists
     @GetMapping("/check-username/{username}")
-    public ResponseEntity<Boolean> checkUsernameExists(@PathVariable String username) {
+    public ResponseEntity<Boolean> checkUsernameExists(@PathVariable(name = "username") String username) {
         boolean exists = usersRepository.existsByUsername(username);
         return new ResponseEntity<>(exists, HttpStatus.OK);
     }
 
     // Check if email exists
     @GetMapping("/check-email/{email}")
-    public ResponseEntity<Boolean> checkEmailExists(@PathVariable String email) {
+    public ResponseEntity<Boolean> checkEmailExists(@PathVariable(name = "email") String email) {
         boolean exists = usersRepository.existsByEmail(email);
         return new ResponseEntity<>(exists, HttpStatus.OK);
     }

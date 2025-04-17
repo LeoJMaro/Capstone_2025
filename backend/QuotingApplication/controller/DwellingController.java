@@ -27,7 +27,7 @@ public class DwellingController {
 
     // Get dwelling info for a specific home policy
     @GetMapping("/policy/{policyId}")
-    public ResponseEntity<Dwelling> getDwellingByPolicyId(@PathVariable int policyId) {
+    public ResponseEntity<Dwelling> getDwellingByPolicyId(@PathVariable(name = "policyId") int policyId) {
         Optional<HomePolicy> policyOpt = homePolicyRepository.findById(policyId);
 
         if (policyOpt.isPresent()) {

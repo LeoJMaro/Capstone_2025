@@ -27,7 +27,7 @@ public class VehicleController {
 
     // Get vehicle info for a specific auto policy
     @GetMapping("/policy/{policyId}")
-    public ResponseEntity<Vehicle> getVehicleByPolicyId(@PathVariable int policyId) {
+    public ResponseEntity<Vehicle> getVehicleByPolicyId(@PathVariable(name = "policyId") int policyId) {
         Optional<AutoPolicy> policyOpt = autoPolicyRepository.findById(policyId);
 
         if (policyOpt.isPresent()) {
@@ -46,7 +46,7 @@ public class VehicleController {
     // Update vehicle info for a specific auto policy
     @PutMapping("/policy/{policyId}")
     public ResponseEntity<Vehicle> updateVehicleForPolicy(
-            @PathVariable int policyId,
+            @PathVariable(name = "policyId") int policyId,
             @RequestBody Vehicle vehicle) {
         System.out.println("Updating vehicle for policy ID: " + policyId);
         System.out.println("Vehicle data: " + vehicle);
