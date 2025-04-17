@@ -110,9 +110,4 @@ export class HomePolicyService {
     return this.http.put<any>(`http://localhost:8080/v1/homepolicies/${homeData.policyId}`, body, { headers });
   }
 
-  cancelHomePolicy(policyId: any) {
-
-    return this.http.<any>(`http://localhost:8080/v1/homepolicies/${policyId}`);
-  }
-
 }
