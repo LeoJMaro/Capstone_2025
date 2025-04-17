@@ -1,36 +1,68 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/internal/Observable';
-import { IHomePolicy } from '../interfaces/ihome-policy';
+import { HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import { Observable } from 'rxjs';
+import {IHomePolicy} from '../interfaces/ihome-policy';
+export interface AutoPolicy {
+
+  customerId: number;
+  startDate: Date;
+  endDate: Date;
+  basePremium: number;
+  premium: number;
+  status: string;
+  dwelling: {
+    dwellingType: string;
+    heatingType: string;
+    location: string;
+    age: number;
+    homeValue: number;
+  }
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class HomePolicyService {
+  private apiUrl = 'http://localhost:8080/v1/homepolicies';
 
   constructor(private http: HttpClient) {}
 
-  getHomeQuote(): Observable<IHomePolicy[]> {
-    return this.http.get<IHomePolicy[]>('http://localhost:8080/api1/homepolicies');
+  getHomePolicies() {
+    return this.http.get(this.apiUrl)
   }
 
-
-  postHomeQuote(data: object): Observable<object> {
-    return this.http.post<IHomePolicy>('URL GOES HERE', {data}); 
-  }
-
-  // postMockQuote(data: any): any {
-
-  //   return {
-  //       basePremium: 40000,
-  //       ageFee: 30,
-  //       heatingFee: 44,
-  //       locationFee: 589,
-  //       additional: 23,
-  //       discountAmount: 50,
-  //       quoteAmount: 900
-      
-  //   }
+  // getHomePolicyById(id: number) {
+  //   const params = new HttpParams().set('id', id.toString());
+  //   return this.http.get(this.apiUrl, { params });
   // }
-  
+
+  getHomePolicyById(id: number) {
+    return this.http.get<any>(`${this.apiUrl}/customers/${id}`);
+  }
+
+
+
+
+
+  postHomeQuote(homeData: any): Observable<IHomePolicy> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    let body = {
+      "customerId": 1,
+      "startDate": "2025-04-16",
+      "endDate": "2026-04-16",
+      "basePremium": 500,
+      "premium": 0.0,
+      "status": "ACTIVE",
+      "dwelling": {
+        "dwellingType": homeData.dwellingType,
+        "heatingType": homeData.heatingType,
+        "location": homeData.location,
+        "age": homeData.age,
+        "homeValue": homeData.homeValue
+    }
+    }
+    return this.http.post<any>(this.apiUrl, body, { headers });
+  }
 }

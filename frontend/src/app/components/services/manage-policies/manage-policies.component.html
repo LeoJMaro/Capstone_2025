@@ -4,35 +4,28 @@
     <mat-card-title>Manage Auto Policies</mat-card-title>
 </mat-card-header>
 <mat-card-content>
-    <table mat-table [dataSource]="autoPolicies" class="mat-elevation-z8" multiTemplateDataRows>
-        
+    <table mat-table [dataSource]="autoData" class="mat-elevation-z8" multiTemplateDataRows>
+
         <ng-container matColumnDef="vehicleMake">
         <th mat-header-cell *matHeaderCellDef> Vehicle Make </th>
-        <td mat-cell *matCellDef="let policy"> {{policy.vehicleMake}} </td>
+        <td mat-cell *matCellDef="let policy"> {{policy.vehicle.vehicleMake}} </td>
         </ng-container>
 
         <ng-container matColumnDef="vehicleModel">
         <th mat-header-cell *matHeaderCellDef> Vehicle Model </th>
-        <td mat-cell *matCellDef="let policy"> {{policy.vehicleModel}} </td>
-        </ng-container>
-
-
-        <!-- Driver Age Column -->
-        <ng-container matColumnDef="driverAge">
-        <th mat-header-cell *matHeaderCellDef> Driver Age </th>
-        <td mat-cell *matCellDef="let policy"> {{policy.driverAge}} </td>
+        <td mat-cell *matCellDef="let policy"> {{policy.vehicle.vehicleModel}} </td>
         </ng-container>
 
         <!-- Accident Count Column -->
         <ng-container matColumnDef="accidentCount">
         <th mat-header-cell *matHeaderCellDef> Accident Count </th>
-        <td mat-cell *matCellDef="let policy"> {{policy.accidentCount}} </td>
+        <td mat-cell *matCellDef="let policy"> {{policy.vehicle.vehicleAccidents}} </td>
         </ng-container>
 
         <!-- Vehicle Age Column -->
         <ng-container matColumnDef="vehicleYear">
         <th mat-header-cell *matHeaderCellDef> Vehicle Year</th>
-        <td mat-cell *matCellDef="let policy"> {{policy.vehicleYear}} </td>
+        <td mat-cell *matCellDef="let policy"> {{policy.vehicle.vehicleYear}} </td>
         </ng-container>
 
         <!-- Premium Column -->
@@ -66,38 +59,40 @@
     </mat-card-content>
 </mat-card>
 
+
+<!--HOME POLICIS-->
 <mat-card class="manage-auto-policies-card">
     <mat-card-header>
         <mat-card-title>Manage Home Policies</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <table mat-table [dataSource]="homePolicies" class="mat-elevation-z8" multiTemplateDataRows>
+        <table mat-table [dataSource]="homeData" class="mat-elevation-z8" multiTemplateDataRows>
 
             <ng-container matColumnDef="homeValue">
             <th mat-header-cell *matHeaderCellDef> Home Value </th>
-            <td mat-cell *matCellDef="let policy"> {{policy.homeValue}} </td>
+            <td mat-cell *matCellDef="let policy"> {{policy.dwelling.homeValue}} </td>
             </ng-container>
 
             <ng-container matColumnDef="homeType">
             <th mat-header-cell *matHeaderCellDef> Home Type </th>
-            <td mat-cell *matCellDef="let policy"> {{policy.homeType}} </td>
+            <td mat-cell *matCellDef="let policy"> {{policy.dwelling.homeType}} </td>
             </ng-container>
-            
+
             <ng-container matColumnDef="location">
             <th mat-header-cell *matHeaderCellDef> Location </th>
-            <td mat-cell *matCellDef="let policy"> {{policy.location}} </td>
+            <td mat-cell *matCellDef="let policy"> {{policy.dwelling.location}} </td>
             </ng-container>
-    
+
             <ng-container matColumnDef="heatingType">
             <th mat-header-cell *matHeaderCellDef> Heating Type</th>
-            <td mat-cell *matCellDef="let policy"> {{policy.heatingType}} </td>
+            <td mat-cell *matCellDef="let policy"> {{policy.dwelling.heatingType}} </td>
             </ng-container>
-    
+
             <ng-container matColumnDef="homeAge">
             <th mat-header-cell *matHeaderCellDef> Home Age </th>
-            <td mat-cell *matCellDef="let policy"> {{policy.homeAge}} </td>
+            <td mat-cell *matCellDef="let policy"> {{policy.dwelling.age}} </td>
             </ng-container>
-    
+
             <ng-container matColumnDef="premium">
             <th mat-header-cell *matHeaderCellDef> Premium </th>
             <td mat-cell *matCellDef="let policy"> {{policy.premium}} </td>
@@ -112,7 +107,7 @@
             <th mat-header-cell *matHeaderCellDef> End Date </th>
             <td mat-cell *matCellDef="let policy"> {{policy.endDate}} </td>
             </ng-container>
-    
+
             <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef> Actions </th>
             <td mat-cell *matCellDef="let policy">
@@ -120,10 +115,9 @@
                 <button mat-button color="warn" (click)="cancelPolicy(policy)">Cancel</button>
             </td>
             </ng-container>
-    
+
             <tr mat-header-row *matHeaderRowDef="displayedColumnsHome"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumnsHome;"></tr>
         </table>
         </mat-card-content>
     </mat-card>
-      

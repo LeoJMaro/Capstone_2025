@@ -24,6 +24,10 @@ export class AutoPolicyService {
 
   constructor(private http: HttpClient) {}
 
+  getAutoPolicyById(id: number) {
+    return this.http.get<any>(`${this.apiUrl}/customers/${id}`);
+  }
+
   getAutoPolicies() {
     return this.http.get(this.apiUrl)
   }

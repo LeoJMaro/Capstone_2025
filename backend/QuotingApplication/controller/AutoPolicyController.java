@@ -40,7 +40,7 @@ public class AutoPolicyController {
 
     // Get auto policy by ID
     @GetMapping(RESTNouns.ID)
-    public ResponseEntity<AutoPolicy> getAutoPolicyById(@PathVariable int id) {
+    public ResponseEntity<AutoPolicy> getAutoPolicyById(@PathVariable(name = "id") int id) {
         Optional<AutoPolicy> policy = autoPolicyRepository.findById(id);
         return policy.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -84,7 +84,7 @@ public class AutoPolicyController {
 
     // Get auto policies by customer ID
     @GetMapping(RESTNouns.CUSTOMER + "/{customerId}")
-    public ResponseEntity<List<AutoPolicy>> getAutoPoliciesByCustomerId(@PathVariable int customerId) {
+    public ResponseEntity<List<AutoPolicy>> getAutoPoliciesByCustomerId(@PathVariable(name = "customerId") int customerId) {
         List<AutoPolicy> policies = autoPolicyRepository.findByCustomerId(customerId);
         if (policies.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

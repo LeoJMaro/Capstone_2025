@@ -38,7 +38,7 @@ public class HomePolicyController {
 
     // Get home policy by ID
     @GetMapping(RESTNouns.ID)
-    public ResponseEntity<HomePolicy> getHomePolicyById(@PathVariable int id) {
+    public ResponseEntity<HomePolicy> getHomePolicyById(@PathVariable(name = "id") int id) {
         Optional<HomePolicy> policy = homePolicyRepository.findById(id);
         return policy.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -95,7 +95,7 @@ public class HomePolicyController {
 
     // Get home policies by customer ID
     @GetMapping(RESTNouns.CUSTOMER + "/{customerId}")
-    public ResponseEntity<List<HomePolicy>> getHomePoliciesByCustomerId(@PathVariable int customerId) {
+    public ResponseEntity<List<HomePolicy>> getHomePoliciesByCustomerId(@PathVariable(name="customerId") int customerId) {
         List<HomePolicy> policies = homePolicyRepository.findByCustomerId(customerId);
         if (policies.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

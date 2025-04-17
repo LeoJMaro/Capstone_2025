@@ -11,7 +11,7 @@ public class Users {
     private int id;
 
     @OneToOne
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumn(name = "customer_id", nullable = true)
     @MapsId
     private Customer customer;
 

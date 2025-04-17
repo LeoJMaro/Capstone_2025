@@ -19,24 +19,27 @@ import { HomePolicyService } from '../../../shared/services/home-policy.service'
     MatPaginatorModule,
     MatSortModule,
     HeaderComponent
-    
+
   ],
   templateUrl: './manage-policies.component.html',
   styleUrl: './manage-policies.component.css'
 })
 export class ManagePoliciesComponent {
 
+  policyData!: any;
   autoData!: any;
   homeData!: any;
+  userData!: any;
+
+  displayedColumnsHome: string [] = ['homeType','homeAge','location', 'heatingType','homeValue', 'startDate','endDate', 'actions']
+  displayedColumnsAuto: string[] = [ 'vehicleMake','vehicleModel','vehicleYear', 'accidentCount', 'premium','startDate', 'endDate', 'actions'];
   // homeType!: string;
   // homeAge!: number;
   // heatingType!: string;
   // homeValue!: number;
 
-
-
-  constructor( 
-    private router: Router, 
+  constructor(
+    private router: Router,
     private autoPolicyService: AutoPolicyService,
     private homePolicyService: HomePolicyService,
   ) {
@@ -44,10 +47,12 @@ export class ManagePoliciesComponent {
   }
 
   ngOnInit() {
-    this.autoPolicyService.getAutoPolicies().subscribe({
+    this.autoPolicyService.getAutoPolicyById(1).subscribe({
       next: (response) => {
         // Handle the response data
         this.autoData = response;
+        console.log("policy DATA IN MANAGE",this.autoData)
+        // this.policyFilter(this.policyData);
       },
       error: (err) => {
         // Handle errors if any
@@ -55,34 +60,45 @@ export class ManagePoliciesComponent {
       }
     });
 
-    this.homePolicyService.getHomeQuote().subscribe({
+    this.homePolicyService.getHomePolicyById(1).subscribe({
       next: (response) => {
         // Handle the response data
         this.homeData = response;
+        console.log("HOME DATA IN MANAGE:", this.homeData)
+        // this.homeFilter();
       },
       error: (err) => {
         // Handle errors if any
         console.error('Error fetching quote:', err);
       }
     });
+
+
   }
-    
+
 
   isChildRoute(): boolean {
     return this.router.url.includes('/manage-policies')
   }
 
-  displayedColumnsAuto: string[] = [ 'vehicleMake','vehicleModel','vehicleYear','driverAge', 'accidentCount', 'premium','startDate', 'endDate', 'actions'];
-  autoPolicies = [
-    {vehicleMake:"Ford", vehicleModel: "Fusion", vehicleYear: "2005", driverAge: 25, accidentCount: 2, premium: 1200, startDate: "", endDate: "" },
-    { vehicleMake:"Honda", vehicleModel: "Accord", vehicleYear: "2015", driverAge: 35, accidentCount: 1,  premium: 950, startDate: "", endDate: "" },
-    // Add more policies as required
-  ];
 
-  displayedColumnsHome: string [] = ['homeType','homeAge','location', 'heatingType','homeValue', 'startDate','endDate', 'actions']
-  homePolicies = [
-    {homeType: "Bungalow", homeAge: "30", location: "Rural", heatingType: "oil", homeValue: 300000, startDate:'', endDate: ''}
-  ]
+
+
+  // policyFilter(policyData: any) {
+  //   for (let policy of policyData) {
+  //     console.log(policy)
+  //     if (policy.policyType === "AUTO") {
+  //       this.autoData.push(policy)
+  //     } else if (policy.policyType === "HOME") {
+  //       this.homeData.push(policy)
+  //
+  //     }
+  //   }
+  //   console.log("POLICY FILTER Home RESULT:", this.homeData);
+  //   console.log("POLICY FILTER AUto RESULT:", this.autoData)
+  // }
+
+
 
 
   renewPolicy(policy: any) {

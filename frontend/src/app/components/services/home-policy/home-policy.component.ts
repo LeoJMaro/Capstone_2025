@@ -42,8 +42,8 @@ export class HomePolicyComponent {
 
 
   constructor(
-    private router: Router, 
-    private route: ActivatedRoute, 
+    private router: Router,
+    private route: ActivatedRoute,
     private dialog: MatDialog,
     private homePolicyService: HomePolicyService
   ) {}
@@ -70,9 +70,24 @@ export class HomePolicyComponent {
   }
 
   onSubmit() {
-    console.log(this.homeData = this.homeForm.value)
-    this.quoteData = this.homePolicyService.postHomeQuote(this.homeData)
-    this.openQuoteDialog(this.homeData, this.quoteData);
+    this.homeData = this.homeForm.value;
+    console.log("HIT HOME ONSUBMIT")
+    // Using an observer object for subscription
+    this.homePolicyService.postHomeQuote(this.homeData).subscribe({
+      next: (response) => {
+        // Handle the response data
+        this.quoteData = response;
+        console.log("#########################")
+        console.log("API RESP IN Home COMP:", this.quoteData)
+
+        // Open the quote dialog with the response data
+        this.openQuoteDialog(this.homeData, this.quoteData);
+      },
+      error: (err) => {
+        // Handle errors if any
+        console.error('Error fetching quote:', err);
+      }
+    });
   }
 
   openQuoteDialog(homeData: HomePolicy, quoteData: any): void {
