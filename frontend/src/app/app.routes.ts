@@ -30,9 +30,14 @@ export const routes: Routes = [
 
   {path: 'contact', component: ContactComponent},
   {path: 'login', component: LoginComponent},
+
   {path: 'register', component: RegisterComponent},
+
   {
-    path: 'about/dashboard', component: AdminDashboardComponent,
+    path: 'about/dashboard', component: AdminDashboardComponent}
+  ,
+  { path: 'dashboard', component: AdminDashboardComponent,
+
   },
   {
     path: 'services/dashboard', component: AdminDashboardComponent,
@@ -42,6 +47,14 @@ export const routes: Routes = [
   },
   {
     path: 'users/dashboard', component: AdminDashboardComponent,
+  },  {
+    path: 'manage-policies/dashboard', component: AdminDashboardComponent,
+  },
+  {
+    path: 'login/dashboard', component: AdminDashboardComponent,
+  },
+  {
+    path: 'about/dashboard', component: AdminDashboardComponent,
   },
   {path: 'users', component: UserManagementComponent,
   },
