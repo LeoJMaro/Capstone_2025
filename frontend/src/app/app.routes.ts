@@ -9,6 +9,7 @@ import {LoginComponent} from './components/login/login.component';
 import {HomePolicyComponent} from './components/services/home-policy/home-policy.component';
 import {AutoPolicyComponent} from './components/services/auto-policy/auto-policy.component';
 import {ManagePoliciesComponent} from './components/services/manage-policies/manage-policies.component';
+import {RegisterComponent} from './components/login/register/register.component';
 
 export const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -29,8 +30,14 @@ export const routes: Routes = [
 
   {path: 'contact', component: ContactComponent},
   {path: 'login', component: LoginComponent},
-   {
-    path: 'dashboard', component: AdminDashboardComponent,
+
+  {path: 'register', component: RegisterComponent},
+
+  {
+    path: 'about/dashboard', component: AdminDashboardComponent}
+  ,
+  { path: 'dashboard', component: AdminDashboardComponent,
+
   },
   {
     path: 'services/dashboard', component: AdminDashboardComponent,

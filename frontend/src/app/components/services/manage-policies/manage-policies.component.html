@@ -48,8 +48,8 @@
         <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let policy">
-            <button mat-button color="primary" (click)="renewPolicy(policy)">Renew</button>
-            <button mat-button color="warn" (click)="cancelPolicy(policy)">Cancel</button>
+            <button mat-button color="primary" (click)="renewAutoPolicy(policy)">Renew</button>
+            <button mat-button color="warn" (click)="cancelAutoPolicy(policy)">Cancel</button>
         </td>
         </ng-container>
 
@@ -111,8 +111,8 @@
             <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef> Actions </th>
             <td mat-cell *matCellDef="let policy">
-                <button mat-button color="primary" (click)="renewPolicy(policy)">Renew</button>
-                <button mat-button color="warn" (click)="cancelPolicy(policy)">Cancel</button>
+                <button mat-button color="primary" (click)="renewHomePolicy(policy)">Renew</button>
+                <button mat-button color="warn" (click)="cancelHomePolicy(policy)">Cancel</button>
             </td>
             </ng-container>
 

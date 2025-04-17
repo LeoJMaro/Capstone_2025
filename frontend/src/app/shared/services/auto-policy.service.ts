@@ -36,11 +36,28 @@ export class AutoPolicyService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
+
+    // Dynamically calculate dates
+    const currentDate = new Date();
+    const nextYearDate = new Date();
+    nextYearDate.setFullYear(currentDate.getFullYear() + 1);
+
+    const formatDate = (date: Date): string => {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    };
+
+    let emailResponse: any = localStorage.getItem('emailResponse');
+    let parsedEmailResponse = JSON.parse(emailResponse);
+    console.log("PARSED EMAIL RESP:",parsedEmailResponse)
+
     let body = {
-      "customerId": 1,
-      "startDate": "2025-05-01T00:00:00",
-      "endDate": "2026-05-01T00:00:00",
-      "basePremium": 500.0,
+      "customerId": parsedEmailResponse,
+      "startDate": formatDate(currentDate),
+      "endDate": formatDate(nextYearDate),
+      "basePremium": 750.00,
       "status": "ACTIVE",
       "vehicle": {
         "vehicleMake": autoData.vehicleMake,
@@ -50,4 +67,43 @@ export class AutoPolicyService {
       }}
     return this.http.post<AutoPolicy>(this.apiUrl, body, { headers });
   }
+
+  renewAutoPolicy(autoData: any) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    console.log("aahh:", autoData)
+
+    // Dynamically calculate dates
+    const currentDate = new Date();
+    const nextYearDate = new Date();
+    nextYearDate.setFullYear(currentDate.getFullYear() + 1);
+
+    const formatDate = (date: Date): string => {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    };
+
+    // Ensure `policyId` is included in the body
+    const body = {
+      customerId: autoData.customerId,
+      startDate: formatDate(currentDate),
+      endDate: formatDate(nextYearDate),
+      basePremium: autoData.basePremium || 750.00, // Use a default if not provided
+      status: autoData.status || "ACTIVE",
+      vehicle: {
+        vehicleMake: autoData.vehicle.vehicleMake,
+        vehicleModel: autoData.vehicle.vehicleModel,
+        vehicleYear: autoData.vehicle.vehicleYear,
+        vehicleAccidents: autoData.vehicle.vehicleAccidents
+      }
+    };
+
+    // Send the `PUT` request with the full payload
+    return this.http.put<any>(`http://localhost:8080/v1/autopolicies/${autoData.policyId}`, body, { headers });
+  }
+
 }

@@ -36,7 +36,7 @@ export class HomePolicyService {
   //   return this.http.get(this.apiUrl, { params });
   // }
 
-  getHomePolicyById(id: number) {
+  getHomePolicyById(id: any) {
     return this.http.get<any>(`${this.apiUrl}/customers/${id}`);
   }
 
@@ -57,8 +57,12 @@ export class HomePolicyService {
       return `${year}-${month}-${day}`;
     };
 
+    let emailResponse: any = localStorage.getItem('emailResponse');
+    let parsedEmailResponse = JSON.parse(emailResponse);
+    console.log("PARSED EMAIL RESP:",parsedEmailResponse)
+
     let body = {
-      "customerId": 1,
+      "customerId": parsedEmailResponse,
       "startDate": formatDate(currentDate),
       "endDate": formatDate(nextYearDate),
       "basePremium": 500,
@@ -75,7 +79,7 @@ export class HomePolicyService {
     return this.http.post<any>(this.apiUrl, body, { headers });
   }
 
-  renewHomePolicy(policyId: any, homeData: any) {
+  renewHomePolicy(homeData: any) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
@@ -92,22 +96,26 @@ export class HomePolicyService {
       return `${year}-${month}-${day}`;
     };
 
+    let emailResponse: any = localStorage.getItem('emailResponse');
+    let parsedEmailResponse = JSON.parse(emailResponse);
+    console.log("PARSED EMAIL RESP:",parsedEmailResponse)
+
     let body = {
-      "customerId": 1,
+      "customerId": parsedEmailResponse,
       "startDate": formatDate(currentDate),
       "endDate": formatDate(nextYearDate),
       "basePremium": 500,
       "premium": 0.0,
       "status": "ACTIVE",
       "dwelling": {
-        "dwellingType": homeData.dwellingType,
-        "heatingType": homeData.heatingType,
-        "location": homeData.location,
-        "age": homeData.age,
-        "homeValue": homeData.homeValue
+        "dwellingType": homeData.dwelling.dwellingType,
+        "heatingType": homeData.dwelling.heatingType,
+        "location": homeData.dwelling.location,
+        "age": homeData.dwelling.age,
+        "homeValue": homeData.dwelling.homeValue
       }
     };
-    return this.http.put<any>(this.apiUrl, body, { headers });
+    return this.http.put<any>(`http://localhost:8080/v1/homepolicies/${homeData.policyId}`, body, { headers });
   }
 
 }

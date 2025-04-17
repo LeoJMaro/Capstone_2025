@@ -31,6 +31,9 @@ export class ManagePoliciesComponent {
   homeData!: any;
   userData!: any;
 
+  parsedEmailResponse!: any;
+  emailResponse!: any;
+
   displayedColumnsHome: string [] = ['homeType','homeAge','location', 'heatingType','homeValue', 'startDate','endDate', 'actions']
   displayedColumnsAuto: string[] = [ 'vehicleMake','vehicleModel','vehicleYear', 'accidentCount', 'premium','startDate', 'endDate', 'actions'];
   // homeType!: string;
@@ -47,7 +50,18 @@ export class ManagePoliciesComponent {
   }
 
   ngOnInit() {
-    this.autoPolicyService.getAutoPolicyById(1).subscribe({
+
+    // Retrieve the value from local storage
+    this.emailResponse = localStorage.getItem('emailResponse');
+    this.parsedEmailResponse = JSON.parse(this.emailResponse);
+    console.log("PARSED EMAIL RESP:",this.parsedEmailResponse)
+
+// Check if the value exists and parse it
+
+
+
+
+    this.autoPolicyService.getAutoPolicyById(this.parsedEmailResponse).subscribe({
       next: (response) => {
         // Handle the response data
         this.autoData = response;
@@ -60,7 +74,7 @@ export class ManagePoliciesComponent {
       }
     });
 
-    this.homePolicyService.getHomePolicyById(1).subscribe({
+    this.homePolicyService.getHomePolicyById(this.parsedEmailResponse).subscribe({
       next: (response) => {
         // Handle the response data
         this.homeData = response;
@@ -81,31 +95,46 @@ export class ManagePoliciesComponent {
     return this.router.url.includes('/manage-policies')
   }
 
+  renewAutoPolicy(policy: any) {
 
+    console.log("RENEW METHOD:", policy)
 
-
-  // policyFilter(policyData: any) {
-  //   for (let policy of policyData) {
-  //     console.log(policy)
-  //     if (policy.policyType === "AUTO") {
-  //       this.autoData.push(policy)
-  //     } else if (policy.policyType === "HOME") {
-  //       this.homeData.push(policy)
-  //
-  //     }
-  //   }
-  //   console.log("POLICY FILTER Home RESULT:", this.homeData);
-  //   console.log("POLICY FILTER AUto RESULT:", this.autoData)
-  // }
-
-
-
-
-  renewPolicy(policy: any) {
-    console.log('Renewing policy:', policy);
+    this.autoPolicyService.renewAutoPolicy(policy).subscribe({
+      next: (response) => {
+        // Handle the response data
+        this.homeData = response;
+        console.log("auto DATA IN  REnew MANAGE:", this.autoData)
+        // this.homeFilter();
+      },
+      error: (err) => {
+        // Handle errors if any
+        console.error('Error fetching quote:', err);
+      }
+    });
   }
 
-  cancelPolicy(policy: any) {
+  cancelAutoPolicy(policy: any) {
     console.log('Canceling policy:', policy);
+  }
+
+  renewHomePolicy(policy: any) {
+    console.log("RENEW METHOD:", policy)
+
+    this.homePolicyService.renewHomePolicy(policy).subscribe({
+      next: (response) => {
+        // Handle the response data
+        this.homeData = response;
+        console.log("home DATA IN  REnew MANAGE:", this.autoData)
+        // this.homeFilter();
+      },
+      error: (err) => {
+        // Handle errors if any
+        console.error('Error fetching quote:', err);
+      }
+    });
+  }
+
+  cancelHomePolicy(policy: any) {
+
   }
 }

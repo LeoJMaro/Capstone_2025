@@ -132,9 +132,9 @@ public class CustomerController {
     }
 
     @GetMapping("/id-by-email/{email}")
-    public ResponseEntity<Integer> getUserIdByEmail(@PathVariable(name = "email") String email) {
-        Optional<Users> user = usersRepository.findByEmail(email);
-        return user.map(value -> new ResponseEntity<>(value.getId(), HttpStatus.OK))
+    public ResponseEntity<Integer> getCustomerIdByEmail(@PathVariable(name = "email") String email) {
+        Optional<Customer> customer = Optional.ofNullable(customerRepository.findByEmail(email));
+        return customer.map(value -> new ResponseEntity<>(value.getId(), HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }
