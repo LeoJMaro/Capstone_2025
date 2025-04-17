@@ -1,2 +1,26 @@
 <app-header></app-header>
-<p>contact works!</p>
+<mat-card class="auto-policy-card">
+  <mat-card-content>
+    <h3 class="form-label title">Contact Us</h3>
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Name" formControlName="name">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Email" formControlName="email">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>message</mat-label>
+        <input matInput placeholder="message" formControlName="phone">
+      </mat-form-field>
+
+      <button type="submit" mat-raised-button color="primary" class="calculate-button">
+        Submit
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>

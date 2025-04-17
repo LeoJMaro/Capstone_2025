@@ -1,8 +1,10 @@
 package QuotingApplication.controller;
 
+import QuotingApplication.dataaccess.UsersRepository;
 import QuotingApplication.factories.CustomerFactory;
 import QuotingApplication.pojos.Customer;
 import QuotingApplication.dataaccess.CustomerRepository;
+import QuotingApplication.pojos.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,9 @@ public class CustomerController {
     @Autowired
     private CustomerFactory customerFactory;
 
+    @Autowired
+    private UsersRepository usersRepository;
+
     // Get all customers
     @GetMapping
     public ResponseEntity<Iterable<Customer>> getAllCustomers() {
@@ -38,7 +43,7 @@ public class CustomerController {
 
     // Get customer by ID
     @GetMapping(RESTNouns.ID)
-    public ResponseEntity<Customer> getCustomerById(@PathVariable int id) {
+    public ResponseEntity<Customer> getCustomerById(@PathVariable (name = "id") int id) {
         try {
             Optional<Customer> customer = customerRepository.findById(id);
             return customer.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
@@ -64,7 +69,7 @@ public class CustomerController {
 
     // Update customer
     @PutMapping(RESTNouns.ID)
-    public ResponseEntity<Customer> updateCustomer(@PathVariable int id, @RequestBody Customer customer) {
+    public ResponseEntity<Customer> updateCustomer(@PathVariable(name = "id") int id, @RequestBody Customer customer) {
         try {
             if (!customerRepository.existsById(id)) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -80,7 +85,7 @@ public class CustomerController {
 
     // Delete customer
     @DeleteMapping(RESTNouns.ID)
-    public ResponseEntity<Void> deleteCustomer(@PathVariable int id) {
+    public ResponseEntity<Void> deleteCustomer(@PathVariable(name = "id") int id) {
         try {
             if (!customerRepository.existsById(id)) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -95,7 +100,7 @@ public class CustomerController {
 
     // Get customer age
     @GetMapping(RESTNouns.ID + "/age")
-    public ResponseEntity<Integer> getCustomerAge(@PathVariable int id) {
+    public ResponseEntity<Integer> getCustomerAge(@PathVariable(name = "id") int id) {
         try {
             Optional<Customer> customerOpt = customerRepository.findById(id);
             if (customerOpt.isPresent()) {
@@ -112,7 +117,7 @@ public class CustomerController {
 
     // Find customer by email
     @GetMapping("/email/{email}")
-    public ResponseEntity<Customer> getCustomerByEmail(@PathVariable String email) {
+    public ResponseEntity<Customer> getCustomerByEmail(@PathVariable(name = "email") String email) {
         try {
             Customer customer = customerRepository.findByEmail(email);
             if (customer != null) {
@@ -124,5 +129,12 @@ public class CustomerController {
             System.err.println("Error retrieving customer by email: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/id-by-email/{email}")
+    public ResponseEntity<Integer> getUserIdByEmail(@PathVariable(name = "email") String email) {
+        Optional<Users> user = usersRepository.findByEmail(email);
+        return user.map(value -> new ResponseEntity<>(value.getId(), HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }

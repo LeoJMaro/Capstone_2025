@@ -2,23 +2,13 @@ package QuotingApplication.pojos;
 
 import jakarta.persistence.*;
 
-//@Entity
-//@Table(name = "vehicles")
 @Embeddable
 public class Vehicle {
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private int vehicleId;
 
     private String vehicleMake;
     private String vehicleModel;
     private int vehicleYear;
     private int vehicleAccidents;
-
-//    @ManyToOne
-//    @JoinColumn(name = "customer_id", nullable = false)
-//    private Customer customer;
 
     public Vehicle() {
     }
@@ -30,13 +20,6 @@ public class Vehicle {
         this.vehicleAccidents = vehicleAccidents;
     }
 
-
-//    public int getVehicleId() {
-//        return vehicleId;
-//    }
-//    public void setVehicleId(int vehicleId) {
-//        this.vehicleId = vehicleId;
-//    }
     public String getVehicleMake() {
         return vehicleMake;
     }
@@ -61,12 +44,4 @@ public class Vehicle {
     public void setVehicleAccidents(int vehicleAccidents) {
         this.vehicleAccidents = vehicleAccidents;
     }
-
-//    public Customer getCustomer() {
-//        return customer;
-//    }
-//
-//    public void setCustomer(Customer customer) {
-//        this.customer = customer;
-//    }
 }

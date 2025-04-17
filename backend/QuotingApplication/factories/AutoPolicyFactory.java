@@ -49,13 +49,19 @@ public class AutoPolicyFactory implements QuotingApplication.factories.PolicyFac
             vehicleFactor = 1.5;
         }
 
-        // Calculate Final Premium
-        double premium = policy.getBasePremium() * ageFactor * accidentFactor * vehicleFactor;
+        // Calculate base premium before tax
+        double premiumBeforeTax = policy.getBasePremium() * ageFactor * accidentFactor * vehicleFactor;
+
+        // Apply tax
+        double taxRate = 0.15; // 15% tax
+        double taxAmount = premiumBeforeTax * taxRate;
+        double finalPremium = premiumBeforeTax + taxAmount;
 
         // Set calculated values
-        policy.setPremium(premium);
+        policy.setPremium(finalPremium);
         policy.setAgeFactor(ageFactor);
         policy.setAccidentFactor(accidentFactor);
         policy.setVehicleFactor(vehicleFactor);
     }
+
 }

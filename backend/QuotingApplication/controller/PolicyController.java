@@ -28,7 +28,7 @@ public class PolicyController {
 
     // Get policy by ID
     @GetMapping(RESTNouns.ID)
-    public ResponseEntity<Policy> getPolicyById(@PathVariable int id) {
+    public ResponseEntity<Policy> getPolicyById(@PathVariable(name = "id") int id) {
         Optional<Policy> policy = policyRepository.findById(id);
         return policy.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -54,7 +54,7 @@ public class PolicyController {
 
     // Delete policy
     @DeleteMapping(RESTNouns.ID)
-    public ResponseEntity<Void> deletePolicy(@PathVariable int id) {
+    public ResponseEntity<Void> deletePolicy(@PathVariable(name = "id") int id) {
         if (!policyRepository.existsById(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -64,7 +64,7 @@ public class PolicyController {
 
     // Get policies by customer ID
     @GetMapping(RESTNouns.CUSTOMER + "/{customerId}")
-    public ResponseEntity<List<Policy>> getPoliciesByCustomerId(@PathVariable int customerId) {
+    public ResponseEntity<List<Policy>> getPoliciesByCustomerId(@PathVariable(name = "customerId") int customerId) {
         List<Policy> policies = policyRepository.findByCustomerId(customerId);
         if (policies.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -74,7 +74,7 @@ public class PolicyController {
 
     // Get policies by status
     @GetMapping("/status/{status}")
-    public ResponseEntity<List<Policy>> getPoliciesByStatus(@PathVariable String status) {
+    public ResponseEntity<List<Policy>> getPoliciesByStatus(@PathVariable(name = "status") String status) {
         List<Policy> policies = policyRepository.findByStatus(status);
         if (policies.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
