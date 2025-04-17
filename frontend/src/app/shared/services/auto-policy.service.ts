@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-
 export interface AutoPolicy {
 
   customerId: number;
@@ -26,13 +24,23 @@ export class AutoPolicyService {
 
   constructor(private http: HttpClient) {}
 
-  postAutoQuote(autoData: any): Observable<AutoPolicy> {
+  getAutoPolicyById(id: number) {
+    return this.http.get<any>(`${this.apiUrl}/customers/${id}`);
+  }
 
+  getAutoPolicies() {
+    return this.http.get(this.apiUrl)
+  }
+
+  postAutoQuote(autoData: any): Observable<AutoPolicy> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
     let body = {
       "customerId": 1,
       "startDate": "2025-05-01T00:00:00",
       "endDate": "2026-05-01T00:00:00",
-      "basePremium": 100.0,
+      "basePremium": 500.0,
       "status": "ACTIVE",
       "vehicle": {
         "vehicleMake": autoData.vehicleMake,
@@ -40,10 +48,6 @@ export class AutoPolicyService {
         "vehicleYear": autoData.vehicleYear,
         "vehicleAccidents": autoData.vehicleAccidents
       }}
-    return this.http.post<AutoPolicy>(this.apiUrl, body);
+    return this.http.post<AutoPolicy>(this.apiUrl, body, { headers });
   }
 }
-
-
-
-
