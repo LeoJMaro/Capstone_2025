@@ -1,22 +1,6 @@
-<
-<div class="banner-container">
-  <div class="settings-container">
-    <button mat-button id="login-btn" routerLink="/login" routerLinkActive="active" ariaCurrentWhenActive="page">
-      LOG OUT
-    </button>
-
-    <button id="settings-btn" mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon id="settings-icon">settings</mat-icon>
-    </button>
-
-    <mat-menu #menu="matMenu">
-      <
-      <button mat-menu-item routerLink="/dashboard" routerLinkActive="active">
-        Admin
-      </button>
-      <button mat-menu-item routerLink="/" routerLinkActive="">
-        Sign out
-      </button>
-    </mat-menu>
-  </div>
-</div>
+<mat-card class="auto-policy-card">
+  <mat-card-content>
+    <mat-card-title class="title-admin">Please login to Admin</mat-card-title>
+    <app-login></app-login>
+  </mat-card-content>
+</mat-card>
