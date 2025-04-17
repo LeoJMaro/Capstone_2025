@@ -23,6 +23,6 @@ import { MatCardModule } from '@angular/material/card';
   `]
 })
 export class AdminDashboardComponent {
-  totalUsers: number = 0;
+  totalUsers: number = 54;
   // You could load dashboard metrics here using a service
 }
