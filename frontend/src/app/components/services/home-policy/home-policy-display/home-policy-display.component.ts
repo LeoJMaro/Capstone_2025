@@ -20,7 +20,7 @@ import { MatListModule } from '@angular/material/list';
 })
 export class HomeQuotePolicyDisplayComponent {
 
-    homeType!: string;
+    dwellingType!: string;
     heatingType!: string;
     location!: string;
     age!: number;
@@ -41,7 +41,7 @@ export class HomeQuotePolicyDisplayComponent {
 
     ngOnInit() {
 
-      this.homeType = this.data.homeType;
+      this.dwellingType = this.data.dwellingType;
       this.heatingType = this.data.heatingType;
       this.location = this.data.location;
       this.age = this.data.age;
@@ -49,13 +49,6 @@ export class HomeQuotePolicyDisplayComponent {
 
       this.basePremium = this.data.quoteData.basePremium;
       this.premium = this.data.quoteData.premium;
-
-
-      console.log(this.location)
-      console.log(this.basePremium)
-
-
-
     }
 
     closeDialog(): void {

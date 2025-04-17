@@ -40,18 +40,27 @@ export class HomePolicyService {
     return this.http.get<any>(`${this.apiUrl}/customers/${id}`);
   }
 
-
-
-
-
   postHomeQuote(homeData: any): Observable<IHomePolicy> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
+
+    // Dynamically calculate dates
+    const currentDate = new Date();
+    const nextYearDate = new Date();
+    nextYearDate.setFullYear(currentDate.getFullYear() + 1);
+
+    const formatDate = (date: Date): string => {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    };
+
     let body = {
       "customerId": 1,
-      "startDate": "2025-04-16",
-      "endDate": "2026-04-16",
+      "startDate": formatDate(currentDate),
+      "endDate": formatDate(nextYearDate),
       "basePremium": 500,
       "premium": 0.0,
       "status": "ACTIVE",
@@ -61,8 +70,44 @@ export class HomePolicyService {
         "location": homeData.location,
         "age": homeData.age,
         "homeValue": homeData.homeValue
-    }
-    }
+      }
+    };
     return this.http.post<any>(this.apiUrl, body, { headers });
   }
+
+  renewHomePolicy(policyId: any, homeData: any) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    // Dynamically calculate dates
+    const currentDate = new Date();
+    const nextYearDate = new Date();
+    nextYearDate.setFullYear(currentDate.getFullYear() + 1);
+
+    const formatDate = (date: Date): string => {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    };
+
+    let body = {
+      "customerId": 1,
+      "startDate": formatDate(currentDate),
+      "endDate": formatDate(nextYearDate),
+      "basePremium": 500,
+      "premium": 0.0,
+      "status": "ACTIVE",
+      "dwelling": {
+        "dwellingType": homeData.dwellingType,
+        "heatingType": homeData.heatingType,
+        "location": homeData.location,
+        "age": homeData.age,
+        "homeValue": homeData.homeValue
+      }
+    };
+    return this.http.put<any>(this.apiUrl, body, { headers });
+  }
+
 }

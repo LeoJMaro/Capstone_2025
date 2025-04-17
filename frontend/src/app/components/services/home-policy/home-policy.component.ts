@@ -57,7 +57,7 @@ export class HomePolicyComponent {
   // private double homeValue;
 
     this.homeForm = new FormGroup({
-      homeType: new FormControl('', [Validators.required]),
+      dwellingType: new FormControl('', [Validators.required]),
       heatingType: new FormControl('', [Validators.required]),
       location: new FormControl('', [Validators.required]),
       age: new FormControl('', [Validators.required]),

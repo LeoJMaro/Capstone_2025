@@ -40,7 +40,7 @@ export class AutoPolicyService {
       "customerId": 1,
       "startDate": "2025-05-01T00:00:00",
       "endDate": "2026-05-01T00:00:00",
-      "basePremium": 100.0,
+      "basePremium": 500.0,
       "status": "ACTIVE",
       "vehicle": {
         "vehicleMake": autoData.vehicleMake,
