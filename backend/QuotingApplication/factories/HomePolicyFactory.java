@@ -55,18 +55,24 @@ public class HomePolicyFactory implements PolicyFactory{
             locationFactor = 1.15;  // Slightly higher risk for rural locations.
         }
 
-        // Final premium calculation based on all factors
-        double premium = (policy.getBasePremium() + additional)
+        // Final premium before tax
+        double premiumBeforeTax = (policy.getBasePremium() + additional)
                 * ageFactor
                 * heatingFactor
                 * locationFactor;
 
+        // Apply tax
+        double taxRate = 0.15; // 15% tax
+        double taxAmount = premiumBeforeTax * taxRate;
+        double finalPremium = premiumBeforeTax + taxAmount;
+
         // Set calculated values back to the policy object
-        policy.setPremium(premium);
+        policy.setPremium(finalPremium);
         policy.setAdditional(additional);
         policy.setAgeFactor(ageFactor);
         policy.setHeatingFactor(heatingFactor);
         policy.setLocationFactor(locationFactor);
     }
+
 
 }
