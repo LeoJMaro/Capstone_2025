@@ -7,15 +7,15 @@ import jakarta.persistence.*;
 public class Users {
 
     @Id
-    // No auto-generation needed if you are using @MapsId (if that's your strategy)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
     @OneToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    @MapsId
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    private String email;  // <-- New field added
+    private String email;
     private String username;
     private String passwordHash;
     private String role;
@@ -31,7 +31,6 @@ public class Users {
         this.role = role;
     }
 
-    // Getters and setters
     public int getId() {
         return id;
     }

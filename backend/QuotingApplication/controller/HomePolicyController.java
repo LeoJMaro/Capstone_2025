@@ -38,7 +38,7 @@ public class HomePolicyController {
 
     // Get home policy by ID
     @GetMapping(RESTNouns.ID)
-    public ResponseEntity<HomePolicy> getHomePolicyById(@PathVariable int id) {
+    public ResponseEntity<HomePolicy> getHomePolicyById(@PathVariable(name = "id") int id) {
         Optional<HomePolicy> policy = homePolicyRepository.findById(id);
         return policy.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -74,7 +74,7 @@ public class HomePolicyController {
 
     // Update home policy
     @PutMapping(RESTNouns.ID)
-    public ResponseEntity<HomePolicy> updateHomePolicy(@PathVariable int id, @RequestBody HomePolicy policy) {
+    public ResponseEntity<HomePolicy> updateHomePolicy(@PathVariable(name = "id") int id, @RequestBody HomePolicy policy) {
         if (!homePolicyRepository.existsById(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -85,7 +85,7 @@ public class HomePolicyController {
 
     // Delete home policy
     @DeleteMapping(RESTNouns.ID)
-    public ResponseEntity<Void> deleteHomePolicy(@PathVariable int id) {
+    public ResponseEntity<Void> deleteHomePolicy(@PathVariable(name = "id") int id) {
         if (!homePolicyRepository.existsById(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -95,7 +95,7 @@ public class HomePolicyController {
 
     // Get home policies by customer ID
     @GetMapping(RESTNouns.CUSTOMER + "/{customerId}")
-    public ResponseEntity<List<HomePolicy>> getHomePoliciesByCustomerId(@PathVariable int customerId) {
+    public ResponseEntity<List<HomePolicy>> getHomePoliciesByCustomerId(@PathVariable(name = "customerId") int customerId) {
         List<HomePolicy> policies = homePolicyRepository.findByCustomerId(customerId);
         if (policies.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -103,56 +103,32 @@ public class HomePolicyController {
         return new ResponseEntity<>(policies, HttpStatus.OK);
     }
 
-    // Calculate premium for a home policy
     @PostMapping("/calculate")
-    public ResponseEntity<HomePolicy> calculateHomePolicy(
-            @RequestBody HomePolicyCalculationRequest request) {
+    public ResponseEntity<HomePolicy> calculateHomePolicy(@RequestBody HomePolicy policy) {
+        try {
+            System.out.println("Customer ID: " + policy.getCustomerId());
+            System.out.println("Dwelling: " + policy.getDwelling());
 
-        Optional<HomePolicy> policyOpt = homePolicyRepository.findById(request.getPolicyId());
-        Optional<Customer> customerOpt = customerRepository.findById(request.getCustomerId());
+            Optional<Customer> customerOpt = customerRepository.findById(policy.getCustomerId());
+            if (customerOpt.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
 
-        if (policyOpt.isEmpty() || customerOpt.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+            Customer customer = customerOpt.get();
+            Dwelling dwelling = policy.getDwelling();
 
-        HomePolicy policy = policyOpt.get();
-        Customer customer = customerOpt.get();
+            System.out.println("Customer: " + customer);
+            System.out.println("Dwelling Type: " + (dwelling != null ? dwelling.getDwellingType() : "null"));
 
-        // Use the factory to calculate premium
-        homePolicyFactory.calculateHomePolicy(policy, customer, request.getDwelling());
+            homePolicyFactory.calculateHomePolicy(policy, customer, dwelling);
 
-        HomePolicy savedPolicy = homePolicyRepository.save(policy);
-        return new ResponseEntity<>(savedPolicy, HttpStatus.OK);
-    }
+            return new ResponseEntity<>(policy, HttpStatus.CREATED);
 
-    // Inner class for calculation request
-    public static class HomePolicyCalculationRequest {
-        private int policyId;
-        private int customerId;
-        private Dwelling dwelling;
-
-        public int getPolicyId() {
-            return policyId;
-        }
-
-        public void setPolicyId(int policyId) {
-            this.policyId = policyId;
-        }
-
-        public int getCustomerId() {
-            return customerId;
-        }
-
-        public void setCustomerId(int customerId) {
-            this.customerId = customerId;
-        }
-
-        public Dwelling getDwelling() {
-            return dwelling;
-        }
-
-        public void setDwelling(Dwelling dwelling) {
-            this.dwelling = dwelling;
+        } catch (Exception e) {
+            e.printStackTrace(); // This will show the line where it breaks
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 }
