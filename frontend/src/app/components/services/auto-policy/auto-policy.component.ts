@@ -65,13 +65,11 @@ export class AutoPolicyComponent {
 
     onSubmit() {
       this.autoData = this.autoForm.value;
-
       // Using an observer object for subscription
       this.autoPolicyService.postAutoQuote(this.autoData).subscribe({
         next: (response) => {
           // Handle the response data
           this.quoteData = response;
-
           // Open the quote dialog with the response data
           this.openQuoteDialog(this.autoData, this.quoteData);
         },
