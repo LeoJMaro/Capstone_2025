@@ -11,11 +11,11 @@ public class Users {
     private int id;
 
     @OneToOne
-    @JoinColumn(name = "customer_id", nullable = true)
+    @JoinColumn(name = "customer_id")
     @MapsId
     private Customer customer;
 
-    private String email;  // <-- New field added
+    private String email;
     private String username;
     private String passwordHash;
     private String role;
@@ -31,7 +31,6 @@ public class Users {
         this.role = role;
     }
 
-    // Getters and setters
     public int getId() {
         return id;
     }

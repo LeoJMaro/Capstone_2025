@@ -2,14 +2,8 @@ package QuotingApplication.pojos;
 
 import jakarta.persistence.*;
 
-//@Entity
-//@Table(name = "dwellings")
 @Embeddable
 public class Dwelling {
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private int dwellingId;
 
     private String dwellingType;
     private String heatingType;
