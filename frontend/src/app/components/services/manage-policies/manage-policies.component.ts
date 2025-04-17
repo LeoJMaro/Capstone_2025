@@ -31,6 +31,9 @@ export class ManagePoliciesComponent {
   homeData!: any;
   userData!: any;
 
+  parsedEmailResponse!: any;
+  emailResponse!: any;
+
   displayedColumnsHome: string [] = ['homeType','homeAge','location', 'heatingType','homeValue', 'startDate','endDate', 'actions']
   displayedColumnsAuto: string[] = [ 'vehicleMake','vehicleModel','vehicleYear', 'accidentCount', 'premium','startDate', 'endDate', 'actions'];
   // homeType!: string;
@@ -47,7 +50,18 @@ export class ManagePoliciesComponent {
   }
 
   ngOnInit() {
-    this.autoPolicyService.getAutoPolicyById(1).subscribe({
+
+    // Retrieve the value from local storage
+    this.emailResponse = localStorage.getItem('emailResponse');
+    this.parsedEmailResponse = JSON.parse(this.emailResponse);
+    console.log("PARSED EMAIL RESP:",this.parsedEmailResponse)
+
+// Check if the value exists and parse it
+
+
+
+
+    this.autoPolicyService.getAutoPolicyById(this.parsedEmailResponse).subscribe({
       next: (response) => {
         // Handle the response data
         this.autoData = response;
@@ -60,7 +74,7 @@ export class ManagePoliciesComponent {
       }
     });
 
-    this.homePolicyService.getHomePolicyById(1).subscribe({
+    this.homePolicyService.getHomePolicyById(this.parsedEmailResponse).subscribe({
       next: (response) => {
         // Handle the response data
         this.homeData = response;

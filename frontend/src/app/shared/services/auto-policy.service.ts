@@ -49,8 +49,12 @@ export class AutoPolicyService {
       return `${year}-${month}-${day}`;
     };
 
+    let emailResponse: any = localStorage.getItem('emailResponse');
+    let parsedEmailResponse = JSON.parse(emailResponse);
+    console.log("PARSED EMAIL RESP:",parsedEmailResponse)
+
     let body = {
-      "customerId": 1,
+      "customerId": parsedEmailResponse,
       "startDate": formatDate(currentDate),
       "endDate": formatDate(nextYearDate),
       "basePremium": 750.00,

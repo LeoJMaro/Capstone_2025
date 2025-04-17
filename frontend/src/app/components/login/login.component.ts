@@ -8,6 +8,7 @@ import { MatError, MatFormFieldModule } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import {RegisterService} from '../../shared/services/register.service';
 
 @Component({
   selector: 'app-login',
@@ -26,8 +27,9 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
   hidePassword = true;
   loginForm!: FormGroup;
+  emailResponse!: any;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router , private registerService: RegisterService) {}
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -39,11 +41,35 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       console.log(this.loginForm.value);
+
+      this.registerService.getCustomerIdByEmail(this.loginForm.value).subscribe({
+        next: (response) => {
+          // Handle the response data
+          this.emailResponse = response;
+          console.log("#########################")
+          console.log("API RESP IN EMAIL COMP:", this.emailResponse)
+
+          localStorage.setItem('emailResponse', JSON.stringify(this.emailResponse));
+
+
+        },
+        error: (err) => {
+          // Handle errors if any
+          console.error('Error fetching quote:', err);
+        }
+      })
+
+
+
       this.router.navigate(['/services']);
     } else {
       console.log('Form is invalid');
       this.loginForm.markAllAsTouched();
     }
+  }
+
+  toRegister() {
+    this.router.navigate(['/register'])
   }
 
   getEmailErrorMsg() {
@@ -66,6 +92,8 @@ export class LoginComponent {
       return
     }
   }
+
+
 
 
 }
