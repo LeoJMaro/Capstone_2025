@@ -63,7 +63,7 @@ public class AutoPolicyController {
 
     // Update auto policy
     @PutMapping(RESTNouns.ID)
-    public ResponseEntity<AutoPolicy> updateAutoPolicy(@PathVariable int id, @RequestBody AutoPolicy policy) {
+    public ResponseEntity<AutoPolicy> updateAutoPolicy(@PathVariable(name = "id") int id, @RequestBody AutoPolicy policy) {
         if (!autoPolicyRepository.existsById(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -74,7 +74,7 @@ public class AutoPolicyController {
 
     // Delete auto policy
     @DeleteMapping(RESTNouns.ID)
-    public ResponseEntity<Void> deleteAutoPolicy(@PathVariable int id) {
+    public ResponseEntity<Void> deleteAutoPolicy(@PathVariable(name = "id") int id) {
         if (!autoPolicyRepository.existsById(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -94,53 +94,15 @@ public class AutoPolicyController {
 
     // Calculate premium for an auto policy
     @PostMapping("/calculate")
-    public ResponseEntity<AutoPolicy> calculateAutoPolicy(@RequestBody AutoPolicyCalculationRequest request) {
-        Optional<AutoPolicy> policyOpt = autoPolicyRepository.findById(request.getPolicyId());
-        Optional<Customer> customerOpt = customerRepository.findById(request.getCustomerId());
-
-        if (policyOpt.isEmpty() || customerOpt.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<AutoPolicy> calculateAutoPolicy(@RequestBody AutoPolicy policy) {
+        Optional<Customer> customerOpt = customerRepository.findById(policy.getCustomerId());
+        if (customerOpt.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        AutoPolicy policy = policyOpt.get();
-        List<Customer> customers = new ArrayList<>();
-        customers.add(customerOpt.get());
+        // Calculate and set premium
+        autoPolicyFactory.calculateAutoPolicy(policy, policy.getCustomerId(), policy.getVehicle(), List.of(customerOpt.get()));
 
-        // Use factory method to calculate premium
-        autoPolicyFactory.calculateAutoPolicy(policy, request.getCustomerId(), request.getVehicle(), customers);
-
-        AutoPolicy savedPolicy = autoPolicyRepository.save(policy);
-        return new ResponseEntity<>(savedPolicy, HttpStatus.OK);
-    }
-
-    // Inner class for calculation request
-    public static class AutoPolicyCalculationRequest {
-        private int policyId;
-        private int customerId;
-        private Vehicle vehicle;
-
-        public int getPolicyId() {
-            return policyId;
-        }
-
-        public void setPolicyId(int policyId) {
-            this.policyId = policyId;
-        }
-
-        public int getCustomerId() {
-            return customerId;
-        }
-
-        public void setCustomerId(int customerId) {
-            this.customerId = customerId;
-        }
-
-        public Vehicle getVehicle() {
-            return vehicle;
-        }
-
-        public void setVehicle(Vehicle vehicle) {
-            this.vehicle = vehicle;
-        }
+        return new ResponseEntity<>(policy, HttpStatus.CREATED);
     }
 }

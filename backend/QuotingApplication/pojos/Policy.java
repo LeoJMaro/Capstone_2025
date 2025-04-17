@@ -20,7 +20,9 @@ public class Policy {
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
+    @Column
     private double basePremium;
+    @Column
     private double premium;
     private String status;
 
@@ -38,10 +40,10 @@ public class Policy {
         this.status = status;
     }
 
-    public int getPolicyId() {
+    public Integer getPolicyId() {
         return policyId;
     }
-    public void setPolicyId(int policyId) {
+    public void setPolicyId(Integer policyId) {
         this.policyId = policyId;
     }
     public int getCustomerId() {

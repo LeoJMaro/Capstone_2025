@@ -71,8 +71,6 @@ export class AutoPolicyComponent {
         next: (response) => {
           // Handle the response data
           this.quoteData = response;
-          console.log("#########################")
-          console.log("API RESP IN AUTO COMP:", this.quoteData)
 
           // Open the quote dialog with the response data
           this.openQuoteDialog(this.autoData, this.quoteData);
