@@ -27,9 +27,10 @@ export class AutoQuoteDisplayComponent {
   vehicleAccidents!: number;
 
   basePremium!: number;
-  accidentFee!: number;
-  discountAmount!: number;
-  quoteAmount!: number;
+  accidentFactor!: number;
+  ageFactor!: number;
+  premium!: number;
+
 
   constructor(
     public dialogRef: MatDialogRef<AutoQuoteDisplayComponent>,
@@ -37,25 +38,18 @@ export class AutoQuoteDisplayComponent {
   ) {}
 
   ngOnInit() {
-    console.log("############################")
-    console.log("in dialog")
-    console.log(this.data)
-    console.log("############################")
-
     this.vehicleMake = this.data.vehicleMake;
     this.vehicleModel = this.data.vehicleModel;
     this.vehicleYear = this.data.vehicleYear;
     this.vehicleAccidents = this.data.vehicleAccidents;
 
     this.basePremium = this.data.quoteData.basePremium;
-    this.accidentFee = this.data.quoteData.accidentFee;
-    this.discountAmount = this.data.quoteData.discountAmount;
-    this.quoteAmount = this.data.quoteData.quoteAmount;
+    this.accidentFactor = this.data.quoteData.accidentFactor;
+    this.ageFactor = this.data.quoteData.ageFactor;
+    this.premium = this.data.quoteData.premium;
 
     console.log(this.vehicleMake)
     console.log(this.basePremium)
-
-
 
   }
 

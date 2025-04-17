@@ -142,4 +142,12 @@ public class UsersController {
         boolean exists = usersRepository.existsByEmail(email);
         return new ResponseEntity<>(exists, HttpStatus.OK);
     }
+
+    @GetMapping("/id-by-email/{email}")
+    public ResponseEntity<Integer> getUserIdByEmail(@PathVariable(name="email") String email) {
+        Optional<Users> user = usersRepository.findByEmail(email);
+        return user.map(value -> new ResponseEntity<>(value.getId(), HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 }
+

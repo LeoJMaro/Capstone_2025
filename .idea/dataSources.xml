@@ -7,7 +7,7 @@
       <imported>true</imported>
       <remarks>$PROJECT_DIR$/backend/QuotingApplication/resources/application.properties</remarks>
       <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mariadb://localhost:3306/capstone</jdbc-url>
+      <jdbc-url>jdbc:mariadb://localhost:3308/capstone</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="books@localhost" uuid="8974e980-f047-4163-93cc-2e29c42859c1">
