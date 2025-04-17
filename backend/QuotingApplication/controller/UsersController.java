@@ -1,6 +1,7 @@
 package QuotingApplication.controller;
 
 import QuotingApplication.dataaccess.CustomerRepository;
+import QuotingApplication.pojos.Customer;
 import QuotingApplication.pojos.Users;
 import QuotingApplication.dataaccess.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,22 +42,28 @@ public class UsersController {
     // Create new user
     @PostMapping
     public ResponseEntity<Users> createUser(@RequestBody Users user) {
-        // Check if username already exists
         if (usersRepository.existsByUsername(user.getUsername())) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
-        // Check if email already exists
         if (usersRepository.existsByEmail(user.getEmail())) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
-        // Hash the password before saving
+        // Load full customer from DB to avoid transient/persistence issues
+        int customerId = user.getCustomer().getId();
+        Optional<Customer> customerOpt = customerRepository.findById(customerId);
+        if (customerOpt.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        user.setCustomer(customerOpt.get());
         user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
 
         Users savedUser = usersRepository.save(user);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
+
 
     // Update user
     @PutMapping(RESTNouns.ID)
