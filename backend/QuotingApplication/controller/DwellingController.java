@@ -45,7 +45,7 @@ public class DwellingController {
     // Update dwelling info for a specific home policy
     @PutMapping("/policy/{policyId}")
     public ResponseEntity<Dwelling> updateDwellingForPolicy(
-            @PathVariable int policyId,
+            @PathVariable(name = "policyId") int policyId,
             @RequestBody Dwelling dwelling) {
 
         Optional<HomePolicy> policyOpt = homePolicyRepository.findById(policyId);
