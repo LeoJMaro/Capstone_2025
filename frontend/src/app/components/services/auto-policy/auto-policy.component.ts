@@ -62,7 +62,6 @@ export class AutoPolicyComponent {
       return this.router.url.includes('/services');
     }
 
-
     onSubmit() {
       this.autoData = this.autoForm.value;
 
@@ -71,6 +70,8 @@ export class AutoPolicyComponent {
         next: (response) => {
           // Handle the response data
           this.quoteData = response;
+          console.log("#########################")
+          console.log("API RESP IN AUTO COMP:", this.quoteData)
 
           // Open the quote dialog with the response data
           this.openQuoteDialog(this.autoData, this.quoteData);
@@ -81,9 +82,6 @@ export class AutoPolicyComponent {
         }
       });
     }
-
-
-
 
     openQuoteDialog(autoData: AutoPolicy, quoteData: any): void {
       this.dialog.open(AutoQuoteDisplayComponent, {
