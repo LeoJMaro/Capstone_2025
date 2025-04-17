@@ -43,7 +43,7 @@ public class PolicyController {
 
     // Update policy
     @PutMapping(RESTNouns.ID)
-    public ResponseEntity<Policy> updatePolicy(@PathVariable int id, @RequestBody Policy policy) {
+    public ResponseEntity<Policy> updatePolicy(@PathVariable(name = "id") int id, @RequestBody Policy policy) {
         if (!policyRepository.existsById(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

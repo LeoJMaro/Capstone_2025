@@ -74,7 +74,7 @@ public class HomePolicyController {
 
     // Update home policy
     @PutMapping(RESTNouns.ID)
-    public ResponseEntity<HomePolicy> updateHomePolicy(@PathVariable int id, @RequestBody HomePolicy policy) {
+    public ResponseEntity<HomePolicy> updateHomePolicy(@PathVariable(name = "id") int id, @RequestBody HomePolicy policy) {
         if (!homePolicyRepository.existsById(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

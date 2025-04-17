@@ -63,7 +63,7 @@ public class AutoPolicyController {
 
     // Update auto policy
     @PutMapping(RESTNouns.ID)
-    public ResponseEntity<AutoPolicy> updateAutoPolicy(@PathVariable int id, @RequestBody AutoPolicy policy) {
+    public ResponseEntity<AutoPolicy> updateAutoPolicy(@PathVariable(name = "id") int id, @RequestBody AutoPolicy policy) {
         if (!autoPolicyRepository.existsById(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

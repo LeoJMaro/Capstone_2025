@@ -75,7 +75,7 @@ export class HomePolicyService {
     return this.http.post<any>(this.apiUrl, body, { headers });
   }
 
-  renewHomePolicy(policyId: any, homeData: any) {
+  renewHomePolicy(homeData: any) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
@@ -100,14 +100,14 @@ export class HomePolicyService {
       "premium": 0.0,
       "status": "ACTIVE",
       "dwelling": {
-        "dwellingType": homeData.dwellingType,
-        "heatingType": homeData.heatingType,
-        "location": homeData.location,
-        "age": homeData.age,
-        "homeValue": homeData.homeValue
+        "dwellingType": homeData.dwelling.dwellingType,
+        "heatingType": homeData.dwelling.heatingType,
+        "location": homeData.dwelling.location,
+        "age": homeData.dwelling.age,
+        "homeValue": homeData.dwelling.homeValue
       }
     };
-    return this.http.put<any>(this.apiUrl, body, { headers });
+    return this.http.put<any>(`http://localhost:8080/v1/homepolicies/${homeData.policyId}`, body, { headers });
   }
 
 }
