@@ -34,7 +34,6 @@ export class RegisterService {
   }
 
   getCustomerIdByEmail(data: any) {
-    console.log("EMAIL PALOOZA:", data)
     return this.http.get<any>(`http://localhost:8080/v1/customers/id-by-email/${data.email}`);
   }
 
@@ -43,7 +42,6 @@ export class RegisterService {
       'Content-Type': 'application/json'
     });
 
-    // Dynamically calculate dates
     const currentDate = new Date();
     const nextYearDate = new Date();
     nextYearDate.setFullYear(currentDate.getFullYear() + 1);

@@ -40,21 +40,14 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
 
       this.registerService.getCustomerIdByEmail(this.loginForm.value).subscribe({
         next: (response) => {
-          // Handle the response data
-          this.emailResponse = response;
-          console.log("#########################")
-          console.log("API RESP IN EMAIL COMP:", this.emailResponse)
 
           localStorage.setItem('emailResponse', JSON.stringify(this.emailResponse));
-
-
         },
         error: (err) => {
-          // Handle errors if any
+
           console.error('Error fetching quote:', err);
         }
       })

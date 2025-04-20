@@ -31,16 +31,6 @@ import {RegisterService} from '../../../shared/services/register.service';
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
-
-  // firstName: "Dylan",
-  // lastName: "Mercer",
-  // email: "dm@IloveFeet.com",
-  // phone: "123456789",
-  // address: "123 Feet Lover Avenue",
-  // dateOfBirth: "2002-05-10",
-  // createdAt: ""
-
-
   firstName!: string;
   lastName!:string;
   email!:string;
@@ -76,14 +66,9 @@ export class RegisterComponent {
 
       this.registerService.postCustomer(this.registerData).subscribe({
         next: (response) => {
-          // Handle the response data
           this.registerResponse = response;
-          console.log("#########################")
-          console.log("API RESP IN AUTO COMP:", this.registerResponse)
-
         },
         error: (err) => {
-          // Handle errors if any
           console.error('Error fetching quote:', err);
         }
       });
