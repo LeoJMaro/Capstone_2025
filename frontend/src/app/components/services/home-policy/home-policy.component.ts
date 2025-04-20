@@ -50,11 +50,6 @@ export class HomePolicyComponent {
 
   ngOnInit() {
 
-  // private String dwellingType;
-  // private String heatingType;
-  // private String location;
-  // private int age;
-  // private double homeValue;
 
     this.homeForm = new FormGroup({
       dwellingType: new FormControl('', [Validators.required]),
@@ -71,30 +66,18 @@ export class HomePolicyComponent {
 
   onSubmit() {
     this.homeData = this.homeForm.value;
-    console.log("HIT HOME ONSUBMIT")
-    // Using an observer object for subscription
     this.homePolicyService.postHomeQuote(this.homeData).subscribe({
       next: (response) => {
-        // Handle the response data
         this.quoteData = response;
-        console.log("#########################")
-        console.log("API RESP IN Home COMP:", this.quoteData)
-
-        // Open the quote dialog with the response data
         this.openQuoteDialog(this.homeData, this.quoteData);
       },
       error: (err) => {
-        // Handle errors if any
         console.error('Error fetching quote:', err);
       }
     });
   }
 
   openQuoteDialog(homeData: HomePolicy, quoteData: any): void {
-    console.log("$$$$$$$$$$$$$$$$$$$$")
-    console.log("BACK IN ")
-    console.log(this.quoteData)
-    console.log("$$$$$$$$$$$$$$$$$$$$")
     this.dialog.open(HomeQuotePolicyDisplayComponent, {
       width: '500px',
       data: { ...homeData, quoteData }

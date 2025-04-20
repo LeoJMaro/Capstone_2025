@@ -48,9 +48,6 @@ export class AutoQuoteDisplayComponent {
     this.ageFactor = this.data.quoteData.ageFactor;
     this.premium = this.data.quoteData.premium;
 
-    console.log(this.vehicleMake)
-    console.log(this.basePremium)
-
   }
 
   closeDialog(): void {

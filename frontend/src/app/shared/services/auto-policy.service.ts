@@ -37,7 +37,6 @@ export class AutoPolicyService {
       'Content-Type': 'application/json'
     });
 
-    // Dynamically calculate dates
     const currentDate = new Date();
     const nextYearDate = new Date();
     nextYearDate.setFullYear(currentDate.getFullYear() + 1);
@@ -51,7 +50,6 @@ export class AutoPolicyService {
 
     let emailResponse: any = localStorage.getItem('emailResponse');
     let parsedEmailResponse = JSON.parse(emailResponse);
-    console.log("PARSED EMAIL RESP:",parsedEmailResponse)
 
     let body = {
       "customerId": parsedEmailResponse,
@@ -73,9 +71,6 @@ export class AutoPolicyService {
       'Content-Type': 'application/json'
     });
 
-    console.log("aahh:", autoData)
-
-    // Dynamically calculate dates
     const currentDate = new Date();
     const nextYearDate = new Date();
     nextYearDate.setFullYear(currentDate.getFullYear() + 1);
@@ -87,12 +82,11 @@ export class AutoPolicyService {
       return `${year}-${month}-${day}`;
     };
 
-    // Ensure `policyId` is included in the body
     const body = {
       customerId: autoData.customerId,
       startDate: formatDate(currentDate),
       endDate: formatDate(nextYearDate),
-      basePremium: autoData.basePremium || 750.00, // Use a default if not provided
+      basePremium: autoData.basePremium || 750.00,
       status: autoData.status || "ACTIVE",
       vehicle: {
         vehicleMake: autoData.vehicle.vehicleMake,
@@ -102,7 +96,6 @@ export class AutoPolicyService {
       }
     };
 
-    // Send the `PUT` request with the full payload
     return this.http.put<any>(`http://localhost:8080/v1/autopolicies/${autoData.policyId}`, body, { headers });
   }
 

@@ -31,11 +31,6 @@ export class HomePolicyService {
     return this.http.get(this.apiUrl)
   }
 
-  // getHomePolicyById(id: number) {
-  //   const params = new HttpParams().set('id', id.toString());
-  //   return this.http.get(this.apiUrl, { params });
-  // }
-
   getHomePolicyById(id: any) {
     return this.http.get<any>(`${this.apiUrl}/customers/${id}`);
   }
@@ -45,7 +40,6 @@ export class HomePolicyService {
       'Content-Type': 'application/json'
     });
 
-    // Dynamically calculate dates
     const currentDate = new Date();
     const nextYearDate = new Date();
     nextYearDate.setFullYear(currentDate.getFullYear() + 1);
@@ -59,7 +53,6 @@ export class HomePolicyService {
 
     let emailResponse: any = localStorage.getItem('emailResponse');
     let parsedEmailResponse = JSON.parse(emailResponse);
-    console.log("PARSED EMAIL RESP:",parsedEmailResponse)
 
     let body = {
       "customerId": parsedEmailResponse,
@@ -84,7 +77,6 @@ export class HomePolicyService {
       'Content-Type': 'application/json'
     });
 
-    // Dynamically calculate dates
     const currentDate = new Date();
     const nextYearDate = new Date();
     nextYearDate.setFullYear(currentDate.getFullYear() + 1);
@@ -98,7 +90,6 @@ export class HomePolicyService {
 
     let emailResponse: any = localStorage.getItem('emailResponse');
     let parsedEmailResponse = JSON.parse(emailResponse);
-    console.log("PARSED EMAIL RESP:",parsedEmailResponse)
 
     let body = {
       "customerId": parsedEmailResponse,
