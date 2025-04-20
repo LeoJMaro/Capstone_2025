@@ -1,0 +1,969 @@
+{
+	"info": {
+		"_postman_id": "e3b355ae-6af8-4835-a3cd-d4ae344d8782",
+		"name": "Insurance API Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41528303"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/users/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user@example.com\",\n  \"username\": \"newuser\",\n  \"passwordHash\": \"plaintextPassword\",\n  \"role\": \"USER\",\n  \"customer\": {\n    \"id\": 1\n  }\n}\n"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"updatedjohn\",\n    \"email\": \"updated@example.com\",\n    \"passwordHash\": \"newhashedpassword\",\n    \"role\": \"customer\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/users/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/users/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users by Role",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/users/role/customer",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"role",
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check Username Exists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/users/check-username/johndoe",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"check-username",
+								"johndoe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check Email Exists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/users/check-email/john@example.com",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"users",
+								"check-email",
+								"john@example.com"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "Get All Customers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/customers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customer by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/customers/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"customers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Customer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Johgn\",\n    \"lastName\": \"Pizza\",\n    \"email\": \"john@pizzaexample.com\",\n    \"dateOfBirth\": \"1990-01-01\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/customers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Customer",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Updated\",\n    \"lastName\": \"Name\",\n    \"email\": \"updated@example.com\",\n    \"dateOfBirth\": \"1990-01-01\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/customers/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"customers",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Customer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/customers/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"customers",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customer Age",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/customers/1/age",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"customers",
+								"1",
+								"age"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customer by Email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/customers/email/john@pizzaexample.com",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"customers",
+								"email",
+								"john@pizzaexample.com"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Policies",
+			"item": [
+				{
+					"name": "Get All Policies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/policies",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"policies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Policy by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/policies/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"policies",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Policy",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"policyType\": \"AUTO\",\n    \"status\": \"INACTIVE\",\n    \"customerId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/policies/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"policies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Policy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/policies/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"policies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Policies by Customer ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/policies/customers/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"policies",
+								"customers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Policies by Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/policies/status/QUOTE",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"policies",
+								"status",
+								"QUOTE"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auto Policies",
+			"item": [
+				{
+					"name": "Get All Auto Policies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/autopolicies",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"autopolicies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Auto Policy by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/autopolicies/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"autopolicies",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Auto Policy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"basePremium\": 750,\n    \"policyType\": \"AUTO\",\n    \"status\": \"ACTIVE\",\n    \"customerId\": 1,\n    \"vehicle\": {\n        \"vehicleMake\": \"Toyota\",\n        \"vehicleModel\": \"Camry\",\n        \"vehicleYear\": 2020,\n        \"vehicleAccidents\": 0\n    }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/autopolicies",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"autopolicies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Auto Policy",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"policyType\": \"AUTO\",\n    \"status\": \"ACTIVE\",\n    \"customerId\": 1,\n    \"vehicle\": {\n        \"vehicleMake\": \"Toyota\",\n        \"vehicleModel\": \"Camry\",\n        \"vehicleYear\": 2020,\n        \"vehicleAccidents\": 1\n    }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/autopolicies/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"autopolicies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Auto Policy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/autopolicies/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"autopolicies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Auto Policies by Customer ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/autopolicies/customers/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"autopolicies",
+								"customers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Calculate Auto Policy Premium",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"policyType\": \"AUTO\",\n    \"basePremium\": 750,\n    \"status\": \"QUOTE\",\n    \"customerId\": 1,\n    \"vehicle\": {\n        \"vehicleMake\": \"Toyota\",\n        \"vehicleModel\": \"Camry\",\n        \"vehicleYear\": 2020,\n        \"vehicleAccidents\": 0\n    }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/autopolicies/calculate",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"autopolicies",
+								"calculate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vehicles",
+			"item": [
+				{
+					"name": "Get Vehicle by Policy ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/vehicles/policy/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"vehicles",
+								"policy",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Vehicle for Policy",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"vehicleMake\": \"Honda\",\n    \"vehicleModel\": \"Accord\",\n    \"vehicleYear\": 2021,\n    \"vehicleAccidents\": 0\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/vehicles/policy/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"vehicles",
+								"policy",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validate Vehicle",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"vehicleMake\": \"Toyota\",\n    \"vehicleModel\": \"\",\n    \"vehicleYear\": 1899,\n    \"vehicleAccidents\": -1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/vehicles/validate",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"vehicles",
+								"validate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Home Policies",
+			"item": [
+				{
+					"name": "Get All Home Policies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/homepolicies",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"homepolicies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Home Policy by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/homepolicies/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"homepolicies",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Home Policy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"basePremium\": 500,\n    \"policyType\": \"HOME\",\n    \"status\": \"ACTIVE\",\n    \"customerId\": 1,\n    \"dwelling\": {\n        \"dwellingType\": \"HOUSE\",\n        \"heatingType\": \"Electric\",\n        \"location\": \"Urban\",\n        \"age\": 10,\n        \"homeValue\": 500000\n    }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/homepolicies",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"homepolicies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Home Policy",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"policyType\": \"HOME\",\n    \"status\": \"ACTIVE\",\n    \"customerId\": 1,\n    \"dwelling\": {\n        \"dwellingType\": \"HOUSE\",\n        \"heatingType\": \"GAS\",\n        \"location\": \"New York\",\n        \"age\": 10,\n        \"homeValue\": 550000\n    }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/homepolicies/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"homepolicies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Home Policy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/homepolicies/7",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"homepolicies",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Home Policies by Customer ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/homepolicies/customers/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"homepolicies",
+								"customers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Calculate Home Policy Premium",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"basePremium\": 500,\n    \"policyType\": \"HOME\",\n    \"status\": \"ACTIVE\",\n    \"customerId\": 1,\n    \"dwelling\": {\n        \"dwellingType\": \"HOUSE\",\n        \"heatingType\": \"GAS\",\n        \"location\": \"Urban\",\n        \"age\": 10,\n        \"homeValue\": 500000\n    }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/homepolicies/calculate",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"homepolicies",
+								"calculate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dwellings",
+			"item": [
+				{
+					"name": "Get Dwelling by Policy ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/dwellings/policy/6",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"dwellings",
+								"policy",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Dwelling for Policy",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"dwellingType\": \"APARTMENT\",\n    \"heatingType\": \"ELECTRIC\",\n    \"location\": \"Boston\",\n    \"age\": 5,\n    \"homeValue\": 350000\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/dwellings/policy/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"dwellings",
+								"policy",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validate Dwelling",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"dwellingType\": \"\",\n    \"heatingType\": \"\",\n    \"location\": \"\",\n    \"age\": -1,\n    \"homeValue\": 0\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/dwellings/validate",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"dwellings",
+								"validate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080"
+		}
+	]
+}
